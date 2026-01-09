@@ -1,0 +1,61 @@
+{
+  "@context": {
+    "il": "https://socioprophet.org/ontology/internet-legends#",
+    "sp": "https://socioprophet.org/ontology/core#",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dct": "http://purl.org/dc/terms/",
+    "Source": "il:Source",
+    "Quote": "il:Quote",
+    "Claim": "il:Claim",
+    "Pattern": "il:Pattern",
+    "Topic": "il:Topic",
+    "Artifact": "il:Artifact",
+    "sourceId": "il:sourceId",
+    "sourceType": "il:sourceType",
+    "url": {
+      "@id": "il:url",
+      "@type": "@id"
+    },
+    "aliasOf": {
+      "@id": "il:aliasOf",
+      "@type": "@id"
+    },
+    "quoteText": "il:quoteText",
+    "quoteLocation": "il:quoteLocation",
+    "fromSource": {
+      "@id": "il:fromSource",
+      "@type": "@id"
+    },
+    "claimText": "il:claimText",
+    "supportedBy": {
+      "@id": "il:supportedBy",
+      "@type": "@id"
+    },
+    "supportedByQuote": {
+      "@id": "il:supportedByQuote",
+      "@type": "@id"
+    },
+    "aboutTopic": {
+      "@id": "il:aboutTopic",
+      "@type": "@id"
+    },
+    "patternName": "il:patternName",
+    "failureMode": "il:failureMode",
+    "conditions": "il:conditions",
+    "symptoms": "il:symptoms",
+    "countermeasures": "il:countermeasures",
+    "modernAnalogs": "il:modernAnalogs",
+    "derivedFromClaim": {
+      "@id": "il:derivedFromClaim",
+      "@type": "@id"
+    },
+    "producedFrom": {
+      "@id": "il:producedFrom",
+      "@type": "@id"
+    },
+    "producedAt": {
+      "@id": "il:producedAt",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    }
+  }
+}

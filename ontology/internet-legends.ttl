@@ -1,0 +1,128 @@
+@prefix il: <https://socioprophet.org/ontology/internet-legends#> .
+@prefix sp: <https://socioprophet.org/ontology/core#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+################################################################################
+# Core idea: treat folklore as a socio-technical evidence graph.
+# Sources -> Quotes -> Claims -> Patterns -> Artifacts (timeline/matrix/chapters)
+################################################################################
+
+il:Source a rdfs:Class ;
+  rdfs:label "Source" ;
+  rdfs:comment "A referenced document or record (RFC, exhibit, archive, blog, etc.)." .
+
+il:Quote a rdfs:Class ;
+  rdfs:label "Quote" ;
+  rdfs:comment "A bounded excerpt extracted from a Source with a location pointer." .
+
+il:Claim a rdfs:Class ;
+  rdfs:label "Claim" ;
+  rdfs:comment "An atomic assertion supported by one or more sources and (ideally) quotes." .
+
+il:Pattern a rdfs:Class ;
+  rdfs:label "Pattern" ;
+  rdfs:comment "A recurring socio-technical failure mode or design principle distilled from claims." .
+
+il:Topic a rdfs:Class ;
+  rdfs:label "Topic" ;
+  rdfs:comment "A research domain or legend cluster (e.g., bikeshedding, Eternal September)." .
+
+il:Artifact a rdfs:Class ;
+  rdfs:label "Artifact" ;
+  rdfs:comment "A produced research output: timeline, matrix, chapter, diagram, etc." .
+
+# Evidence level enumeration (simple string values for interoperability)
+il:evidenceLevel a rdfs:Class ;
+  rdfs:label "Evidence Level" ;
+  rdfs:comment "Primary/Secondary/Tertiary classification." .
+
+# Source fields
+il:sourceId a rdfs:Property ;
+  rdfs:domain il:Source ; rdfs:range xsd:string ;
+  rdfs:label "source id" .
+
+il:sourceType a rdfs:Property ;
+  rdfs:domain il:Source ; rdfs:range xsd:string ;
+  rdfs:label "source type" ;
+  rdfs:comment "primary | secondary | tertiary" .
+
+il:url a rdfs:Property ;
+  rdfs:domain il:Source ; rdfs:range xsd:anyURI ;
+  rdfs:label "url" .
+
+il:aliasOf a rdfs:Property ;
+  rdfs:domain il:Source ; rdfs:range il:Source ;
+  rdfs:label "alias of" ;
+  rdfs:comment "Points to canonical source when multiple URLs host the same artifact." .
+
+# Quote fields
+il:quoteText a rdfs:Property ;
+  rdfs:domain il:Quote ; rdfs:range xsd:string ;
+  rdfs:label "quote text" .
+
+il:quoteLocation a rdfs:Property ;
+  rdfs:domain il:Quote ; rdfs:range xsd:string ;
+  rdfs:label "quote location" ;
+  rdfs:comment "Section/page/line reference within the source." .
+
+il:fromSource a rdfs:Property ;
+  rdfs:domain il:Quote ; rdfs:range il:Source ;
+  rdfs:label "from source" .
+
+# Claim fields
+il:claimText a rdfs:Property ;
+  rdfs:domain il:Claim ; rdfs:range xsd:string ;
+  rdfs:label "claim text" .
+
+il:supportedBy a rdfs:Property ;
+  rdfs:domain il:Claim ; rdfs:range il:Source ;
+  rdfs:label "supported by" .
+
+il:supportedByQuote a rdfs:Property ;
+  rdfs:domain il:Claim ; rdfs:range il:Quote ;
+  rdfs:label "supported by quote" .
+
+il:aboutTopic a rdfs:Property ;
+  rdfs:domain il:Claim ; rdfs:range il:Topic ;
+  rdfs:label "about topic" .
+
+# Pattern fields
+il:patternName a rdfs:Property ;
+  rdfs:domain il:Pattern ; rdfs:range xsd:string ;
+  rdfs:label "pattern name" .
+
+il:failureMode a rdfs:Property ;
+  rdfs:domain il:Pattern ; rdfs:range xsd:string ;
+  rdfs:label "failure mode" .
+
+il:conditions a rdfs:Property ;
+  rdfs:domain il:Pattern ; rdfs:range xsd:string ;
+  rdfs:label "conditions" .
+
+il:symptoms a rdfs:Property ;
+  rdfs:domain il:Pattern ; rdfs:range xsd:string ;
+  rdfs:label "symptoms" .
+
+il:countermeasures a rdfs:Property ;
+  rdfs:domain il:Pattern ; rdfs:range xsd:string ;
+  rdfs:label "countermeasures" .
+
+il:modernAnalogs a rdfs:Property ;
+  rdfs:domain il:Pattern ; rdfs:range xsd:string ;
+  rdfs:label "modern analogs" .
+
+il:derivedFromClaim a rdfs:Property ;
+  rdfs:domain il:Pattern ; rdfs:range il:Claim ;
+  rdfs:label "derived from claim" .
+
+# Artifact provenance hooks (PROV-O compatible)
+il:producedFrom a rdfs:Property ;
+  rdfs:domain il:Artifact ; rdfs:range prov:Entity ;
+  rdfs:label "produced from" .
+
+il:producedAt a rdfs:Property ;
+  rdfs:domain il:Artifact ; rdfs:range xsd:dateTime ;
+  rdfs:label "produced at" .

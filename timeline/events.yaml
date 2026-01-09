@@ -1,0 +1,21 @@
+events:
+  - id: E-001
+    date: "1957-01-01"
+    label: "Parkinson describes law of triviality (anchor for bikeshedding)"
+    sources: []
+  - id: E-002
+    date: "1983-01-01"
+    label: "Ed Post publishes 'Real Programmers Don’t Use Pascal' (tooling machismo satire)"
+    sources: []
+  - id: E-003
+    date: "1989-10-01"
+    label: "RFC 1122 (Robustness Principle appears in host requirements)"
+    sources: [S34]
+  - id: E-004
+    date: "1990-04-01"
+    label: "RFC 1149 (Avian Carriers) — standards humor as culture"
+    sources: [S36]
+  - id: E-005
+    date: "1995-10-01"
+    label: "RFC 1855 Netiquette Guidelines codify norms"
+    sources: [S04]

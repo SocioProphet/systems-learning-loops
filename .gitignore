@@ -1,0 +1,12 @@
+# Python / tooling
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# OS detritus
+.DS_Store
+
+# Generated artifacts
+kb/sources/sources.jsonld
+dist/

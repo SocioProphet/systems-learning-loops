@@ -1,0 +1,42 @@
+# Source registry (seed). Expand with full enumerated list.
+# Fields:
+# - id: stable internal id (e.g., S01)
+# - label: short human label
+# - title, author, year, venue
+# - type: primary|secondary|tertiary
+# - url: canonical url
+# - alias_of: optional id of canonical source
+
+sources:
+  - id: S04
+    label: RFC 1855 (RFC Editor)
+    title: "RFC 1855: Netiquette Guidelines"
+    author: "Hambridge, S."
+    year: 1995
+    venue: "RFC Editor"
+    type: primary
+    url: "https://www.rfc-editor.org/rfc/rfc1855"
+  - id: S34
+    label: RFC 1122 (IETF Datatracker)
+    title: "RFC 1122: Requirements for Internet Hosts — Communication Layers"
+    author: "Braden, R. (ed.)"
+    year: 1989
+    venue: "IETF Datatracker"
+    type: primary
+    url: "https://datatracker.ietf.org/doc/html/rfc1122"
+  - id: S36
+    label: RFC 1149 (IETF Datatracker)
+    title: "RFC 1149: A Standard for the Transmission of IP Datagrams on Avian Carriers"
+    author: "Waitzman, D."
+    year: 1990
+    venue: "IETF Datatracker"
+    type: primary
+    url: "https://datatracker.ietf.org/doc/html/rfc1149"
+  - id: S37
+    label: RFC 2324 (IETF Datatracker)
+    title: "RFC 2324: Hyper Text Coffee Pot Control Protocol (HTCPCP/1.0)"
+    author: "D. Raggett; et al."
+    year: 1998
+    venue: "IETF Datatracker"
+    type: primary
+    url: "https://datatracker.ietf.org/doc/html/rfc2324"
