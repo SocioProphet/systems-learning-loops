@@ -1,0 +1,154 @@
+# Lawful-learning claim registry for Phase 7 research capture.
+# Claims are derived from SocioProphet/superconscious lawful-learning
+# Phases 1-6 and keep their epistemic tags intact.
+
+claims:
+  - id: LL-CLAIM-001
+    claim_id: claim.framework.behavior-first.g
+    tag: G
+    status: captured
+    summary: "The invariant object of lawful learning is the set of admissible learning behaviors under declared law, evidence, replay, and promotion constraints."
+    source_refs: [LL-SRC-001]
+    governance_invariant_ref: "lawful_learning_trust_surface"
+    non_claims:
+      - "does_not_claim_runtime_execution"
+      - "does_not_claim_empirical_validation"
+
+  - id: LL-CLAIM-002
+    claim_id: claim.substrate.placeholder.zero-divisor.s
+    tag: S
+    status: captured
+    summary: "zero_divisor_proximity is a placeholder frontier formula and must not be promoted without a concrete definition, domain, numerical procedure, and validation test."
+    source_refs: [LL-SRC-001]
+    speculative_test_artifact: "TBD: formal zero-divisor proximity definition and validation fixture"
+    non_claims:
+      - "does_not_claim_formula_defined"
+      - "does_not_claim_empirical_measurement"
+
+  - id: LL-CLAIM-003
+    claim_id: claim.substrate.placeholder.hurwitz-residual.s
+    tag: S
+    status: captured
+    summary: "hurwitz_residual is a placeholder frontier formula and must not be promoted without a concrete definition, domain, numerical procedure, and validation test."
+    source_refs: [LL-SRC-001]
+    speculative_test_artifact: "TBD: formal Hurwitz residual definition and validation fixture"
+    non_claims:
+      - "does_not_claim_formula_defined"
+      - "does_not_claim_empirical_measurement"
+
+  - id: LL-CLAIM-004
+    claim_id: claim.structure.hypercomplex-hopfield.s
+    tag: S
+    status: captured
+    summary: "Hypercomplex Hopfield-style structure is an operational extension candidate, not a settled mathematical result in the lawful-learning framework."
+    source_refs: [LL-SRC-001]
+    speculative_test_artifact: "TBD: hypercomplex Hopfield stability and capacity test harness"
+    non_claims:
+      - "does_not_claim_validated_hypercomplex_dynamics"
+
+  - id: LL-CLAIM-005
+    claim_id: claim.adapter.open-network-cospan.m
+    tag: M
+    status: captured
+    summary: "Adapters can be modeled as open networks with input and output boundary maps forming a cospan."
+    source_refs: [LL-SRC-002, LL-SRC-010]
+    mathematical_dependency: "Open network and cospan composition formalism from applied category theory."
+    non_claims:
+      - "does_not_claim_neural_adapter_literal_equivalence"
+
+  - id: LL-CLAIM-006
+    claim_id: claim.adapter.dag-acyclic.g
+    tag: G
+    status: captured
+    summary: "Adapter dependency graphs must be acyclic; directed cycles are rejected before composition."
+    source_refs: [LL-SRC-002, LL-SRC-006, LL-SRC-007]
+    governance_invariant_ref: "adapter_dag_acyclic"
+    non_claims:
+      - "does_not_verify_dependency_completeness"
+
+  - id: LL-CLAIM-007
+    claim_id: claim.adapter.black-boxing-composes.g
+    tag: G
+    status: captured
+    summary: "Composed manifests must be derivable from constituent manifests and composition rule only, without latent-state inspection."
+    source_refs: [LL-SRC-002, LL-SRC-006, LL-SRC-007]
+    governance_invariant_ref: "black_boxing_composes"
+    non_claims:
+      - "does_not_verify_manifest_semantic_completeness"
+
+  - id: LL-CLAIM-008
+    claim_id: claim.adapter.replay-seal-composed.g
+    tag: G
+    status: captured
+    summary: "A composed replay seal must be derivable from constituent seals, the composition rule, and the boundary hash without rerunning constituents."
+    source_refs: [LL-SRC-002, LL-SRC-006, LL-SRC-007]
+    governance_invariant_ref: "replay_seal_for_composed_trace"
+    non_claims:
+      - "does_not_verify_cryptographic_authenticity"
+
+  - id: LL-CLAIM-009
+    claim_id: claim.invariant.may-wigner-monitor.g-t
+    tag: G|T
+    status: captured
+    summary: "The May-Wigner monitor is a governance requirement with a typological random-matrix analogy, not a mathematical guarantee of training stability."
+    source_refs: [LL-SRC-003, LL-SRC-006, LL-SRC-007]
+    governance_invariant_ref: "may_wigner_monitor_declared"
+    typological_parallel_target: "May-style random-matrix stability criterion"
+    claim_demarcation: "Governance sentence requires monitor declaration; typological sentence records the analogy and boundary."
+    non_claims:
+      - "does_not_claim_may_wigner_assumptions_hold"
+
+  - id: LL-CLAIM-010
+    claim_id: claim.invariant.control-data-plane-separation.g
+    tag: G
+    status: captured
+    summary: "Lawful-learning systems must declare explicit separation between control-plane and data-plane components."
+    source_refs: [LL-SRC-003, LL-SRC-006]
+    governance_invariant_ref: "control_data_plane_separation"
+    non_claims:
+      - "does_not_verify_runtime_component_behavior"
+
+  - id: LL-CLAIM-011
+    claim_id: claim.invariant.tail-integral-audit.g-s
+    tag: G|S
+    status: captured
+    summary: "Audit allocation must include a tail component, while the proposed tail-integral formula remains speculative until operationalized."
+    source_refs: [LL-SRC-003, LL-SRC-006]
+    governance_invariant_ref: "tail_audit_allocated"
+    speculative_test_artifact: "TBD: define f, measure, convergence condition, and estimator"
+    claim_demarcation: "Governance sentence requires tail allocation; speculative sentence marks the analytic formula as frontier."
+    non_claims:
+      - "does_not_claim_tail_integral_convergence"
+
+  - id: LL-CLAIM-012
+    claim_id: claim.invariant.composition-superposition-allocation.g-t
+    tag: G|T
+    status: captured
+    summary: "Circuit declarations must state composition/superposition allocation; the linear-algebraic parallel is typological."
+    source_refs: [LL-SRC-003, LL-SRC-006]
+    governance_invariant_ref: "composition_superposition_declared"
+    typological_parallel_target: "direct-sum versus tensor-product decomposition"
+    claim_demarcation: "Governance sentence requires explicit allocation; typological sentence records the structural analogy."
+    non_claims:
+      - "does_not_claim_canonical_algebraic_decomposition"
+
+  - id: LL-CLAIM-013
+    claim_id: claim.invariant.epistemic-non-collapse.g
+    tag: G
+    status: captured
+    summary: "Claims at distinct epistemic tags must not collapse into single-register statements; mixed-tag claims require sentence demarcation."
+    source_refs: [LL-SRC-003, LL-SRC-005, LL-SRC-006, LL-SRC-007]
+    governance_invariant_ref: "epistemic_non_collapse"
+    non_claims:
+      - "does_not_evaluate_whether_promotion_is_deserved"
+
+  - id: LL-CLAIM-014
+    claim_id: claim.trust-surface.tier2-binding.g
+    tag: G
+    status: captured
+    summary: "The lawful-learning trust surface is bound to the Tier 2 invariant catalog through the merged superconscious trust-surface binding."
+    source_refs: [LL-SRC-004, LL-SRC-008, LL-SRC-009]
+    governance_invariant_ref: "lawful_learning_trust_surface_tier2_binding"
+    non_claims:
+      - "does_not_claim_tier2_verified_modes"
+      - "does_not_claim_runtime_receipt_lookup"
