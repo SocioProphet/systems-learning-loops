@@ -1,0 +1,153 @@
+@prefix ll: <https://socioprophet.org/ontology/lawful-learning#> .
+@prefix il: <https://socioprophet.org/ontology/internet-legends#> .
+@prefix sp: <https://socioprophet.org/ontology/core#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+################################################################################
+# Lawful Learning ontology
+#
+# Sources -> Claims -> Invariants -> Trust Surfaces -> Checkers
+################################################################################
+
+ll:Source a rdfs:Class ;
+  rdfs:label "Lawful Learning Source" ;
+  rdfs:comment "A source artifact supporting the lawful-learning research pack." .
+
+ll:Claim a rdfs:Class ;
+  rdfs:label "Lawful Learning Claim" ;
+  rdfs:comment "An epistemically tagged lawful-learning claim." .
+
+ll:Invariant a rdfs:Class ;
+  rdfs:label "Lawful Learning Invariant" ;
+  rdfs:comment "A structural invariant checked by the lawful-learning checker or declared by doctrine." .
+
+ll:GovernanceInvariant a rdfs:Class ;
+  rdfs:subClassOf ll:Invariant ;
+  rdfs:label "Governance Invariant" .
+
+ll:CategoricalInvariant a rdfs:Class ;
+  rdfs:subClassOf ll:Invariant ;
+  rdfs:label "Categorical Invariant" .
+
+ll:TrustSurface a rdfs:Class ;
+  rdfs:label "Lawful Learning Trust Surface" ;
+  rdfs:comment "A lawful-learning composition surface bound to Tier 2 composition invariants." .
+
+ll:Checker a rdfs:Class ;
+  rdfs:label "Lawful Learning Checker" ;
+  rdfs:comment "A structural checker over lawful-learning schemas, fixtures, and trust surfaces." .
+
+ll:Schema a rdfs:Class ;
+  rdfs:label "Lawful Learning Schema" .
+
+ll:Fixture a rdfs:Class ;
+  rdfs:label "Lawful Learning Fixture" .
+
+ll:EpistemicTag a rdfs:Class ;
+  rdfs:label "Epistemic Tag" ;
+  rdfs:comment "M/T/S/E/G tag classification for lawful-learning claims." .
+
+ll:hasClaimId a rdfs:Property ;
+  rdfs:domain ll:Claim ;
+  rdfs:range xsd:string ;
+  rdfs:label "has claim id" .
+
+ll:hasTag a rdfs:Property ;
+  rdfs:domain ll:Claim ;
+  rdfs:range xsd:string ;
+  rdfs:label "has epistemic tag" .
+
+ll:hasStatus a rdfs:Property ;
+  rdfs:domain ll:Claim ;
+  rdfs:range xsd:string ;
+  rdfs:label "has status" .
+
+ll:supportedBySource a rdfs:Property ;
+  rdfs:domain ll:Claim ;
+  rdfs:range ll:Source ;
+  rdfs:label "supported by source" .
+
+ll:operationalizedByInvariant a rdfs:Property ;
+  rdfs:domain ll:Claim ;
+  rdfs:range ll:Invariant ;
+  rdfs:label "operationalized by invariant" .
+
+ll:checkedBy a rdfs:Property ;
+  rdfs:domain ll:Invariant ;
+  rdfs:range ll:Checker ;
+  rdfs:label "checked by" .
+
+ll:declaredInTrustSurface a rdfs:Property ;
+  rdfs:domain ll:Invariant ;
+  rdfs:range ll:TrustSurface ;
+  rdfs:label "declared in trust surface" .
+
+ll:encodedBySchema a rdfs:Property ;
+  rdfs:domain ll:Invariant ;
+  rdfs:range ll:Schema ;
+  rdfs:label "encoded by schema" .
+
+ll:exercisedByFixture a rdfs:Property ;
+  rdfs:domain ll:Invariant ;
+  rdfs:range ll:Fixture ;
+  rdfs:label "exercised by fixture" .
+
+ll:hasNonClaim a rdfs:Property ;
+  rdfs:domain ll:Claim ;
+  rdfs:range xsd:string ;
+  rdfs:label "has non-claim" .
+
+################################################################################
+# Canonical invariant instances
+################################################################################
+
+ll:adapter_dag_acyclic a ll:CategoricalInvariant ;
+  rdfs:label "adapter_dag_acyclic" ;
+  ll:checkedBy ll:check_lawful_learning .
+
+ll:black_boxing_composes a ll:CategoricalInvariant ;
+  rdfs:label "black_boxing_composes" ;
+  ll:checkedBy ll:check_lawful_learning .
+
+ll:replay_seal_for_composed_trace a ll:CategoricalInvariant ;
+  rdfs:label "replay_seal_for_composed_trace" ;
+  ll:checkedBy ll:check_lawful_learning .
+
+ll:may_wigner_monitor_declared a ll:GovernanceInvariant ;
+  rdfs:label "may_wigner_monitor_declared" ;
+  ll:checkedBy ll:check_lawful_learning .
+
+ll:control_data_plane_separation a ll:GovernanceInvariant ;
+  rdfs:label "control_data_plane_separation" ;
+  ll:checkedBy ll:check_lawful_learning .
+
+ll:tail_audit_allocated a ll:GovernanceInvariant ;
+  rdfs:label "tail_audit_allocated" ;
+  ll:checkedBy ll:check_lawful_learning .
+
+ll:emergent_discretization_logged a ll:GovernanceInvariant ;
+  rdfs:label "emergent_discretization_logged" ;
+  ll:checkedBy ll:check_lawful_learning .
+
+ll:composition_superposition_declared a ll:GovernanceInvariant ;
+  rdfs:label "composition_superposition_declared" ;
+  ll:checkedBy ll:check_lawful_learning .
+
+ll:anti_satisficing_continuation a ll:GovernanceInvariant ;
+  rdfs:label "anti_satisficing_continuation" ;
+  ll:checkedBy ll:check_lawful_learning .
+
+ll:epistemic_non_collapse a ll:GovernanceInvariant ;
+  rdfs:label "epistemic_non_collapse" ;
+  ll:checkedBy ll:check_lawful_learning .
+
+ll:check_lawful_learning a ll:Checker ;
+  rdfs:label "check-lawful-learning.py" ;
+  rdfs:comment "Structural checker from superconscious Phase 6." .
+
+ll:lawful_learning_trust_surface a ll:TrustSurface ;
+  rdfs:label "Lawful-learning trust surface" ;
+  rdfs:comment "Draft trust-surface example from superconscious Phase 4." .
