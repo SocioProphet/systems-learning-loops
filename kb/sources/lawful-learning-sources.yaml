@@ -1,0 +1,123 @@
+# Lawful-learning source registry for Phase 7 research capture.
+# Repo-local pack derived from superconscious lawful-learning Phases 1-6
+# and ProCybernetica Tier 2 invariant/binding work.
+
+sources:
+  - id: LL-SRC-001
+    label: Phase 2 framework cleanup
+    title: "Lawful Learning Framework: Substrates, Structures, and Circuits"
+    type: primary
+    venue: "SocioProphet/superconscious"
+    author: "Michael Heller / SocioProphet"
+    year: 2026
+    url: "https://github.com/SocioProphet/superconscious/blob/main/docs/lawful-learning/01-framework-substrates-structures-circuits.md"
+    repo_path: "docs/lawful-learning/01-framework-substrates-structures-circuits.md"
+    evidence_role: "canonical framework cleanup"
+
+  - id: LL-SRC-002
+    label: Phase 3 categorical foundations
+    title: "Categorical Foundations and Composition Discipline"
+    type: primary
+    venue: "SocioProphet/superconscious"
+    author: "Michael Heller / SocioProphet"
+    year: 2026
+    url: "https://github.com/SocioProphet/superconscious/blob/main/docs/lawful-learning/02-categorical-foundations.md"
+    repo_path: "docs/lawful-learning/02-categorical-foundations.md"
+    evidence_role: "adapter composition and categorical invariant source"
+
+  - id: LL-SRC-003
+    label: Phase 4 governance invariants
+    title: "Lawful Learning Governance Invariants"
+    type: primary
+    venue: "SocioProphet/superconscious"
+    author: "Michael Heller / SocioProphet"
+    year: 2026
+    url: "https://github.com/SocioProphet/superconscious/blob/main/docs/lawful-learning/03-lawful-learning-invariants.md"
+    repo_path: "docs/lawful-learning/03-lawful-learning-invariants.md"
+    evidence_role: "seven governance invariant source"
+
+  - id: LL-SRC-004
+    label: Phase 4 trust-surface example
+    title: "TRUST_SURFACE.lawful-learning.yaml"
+    type: primary
+    venue: "SocioProphet/superconscious"
+    author: "Michael Heller / SocioProphet"
+    year: 2026
+    url: "https://github.com/SocioProphet/superconscious/blob/main/examples/TRUST_SURFACE.lawful-learning.yaml"
+    repo_path: "examples/TRUST_SURFACE.lawful-learning.yaml"
+    evidence_role: "draft trust-surface example"
+
+  - id: LL-SRC-005
+    label: Phase 5 schema lane
+    title: "Lawful-learning repo-local schemas"
+    type: primary
+    venue: "SocioProphet/superconscious"
+    author: "Michael Heller / SocioProphet"
+    year: 2026
+    url: "https://github.com/SocioProphet/superconscious/tree/main/schemas/lawful-learning"
+    repo_path: "schemas/lawful-learning/"
+    evidence_role: "machine-checkable schema surface"
+
+  - id: LL-SRC-006
+    label: Phase 6 checker
+    title: "check-lawful-learning.py"
+    type: primary
+    venue: "SocioProphet/superconscious"
+    author: "Michael Heller / SocioProphet"
+    year: 2026
+    url: "https://github.com/SocioProphet/superconscious/blob/main/scripts/check-lawful-learning.py"
+    repo_path: "scripts/check-lawful-learning.py"
+    evidence_role: "structural checker implementation"
+
+  - id: LL-SRC-007
+    label: Phase 6 negative fixtures
+    title: "Lawful-learning checker fixtures"
+    type: primary
+    venue: "SocioProphet/superconscious"
+    author: "Michael Heller / SocioProphet"
+    year: 2026
+    url: "https://github.com/SocioProphet/superconscious/tree/main/tests/fixtures/lawful-learning"
+    repo_path: "tests/fixtures/lawful-learning/"
+    evidence_role: "positive and negative fixture corpus"
+
+  - id: LL-SRC-008
+    label: Tier 2 composition invariants
+    title: "Tier 2 Composition Invariants"
+    type: primary
+    venue: "SocioProphet/ProCybernetica"
+    author: "Michael Heller / SocioProphet"
+    year: 2026
+    url: "https://github.com/SocioProphet/ProCybernetica/blob/main/docs/governance-fabric/TIER2_COMPOSITION_INVARIANTS.md"
+    repo_path: "docs/governance-fabric/TIER2_COMPOSITION_INVARIANTS.md"
+    evidence_role: "canonical Tier 2 invariant catalog"
+
+  - id: LL-SRC-009
+    label: Tier 2 binding fan-out closure
+    title: "Tier 2 Binding Fan-Out Status"
+    type: primary
+    venue: "SocioProphet/ProCybernetica"
+    author: "Michael Heller / SocioProphet"
+    year: 2026
+    url: "https://github.com/SocioProphet/ProCybernetica/blob/main/docs/governance-fabric/TIER2_BINDING_FANOUT_STATUS.md"
+    repo_path: "docs/governance-fabric/TIER2_BINDING_FANOUT_STATUS.md"
+    evidence_role: "cross-repo Tier 2 binding closure record"
+
+  - id: LL-SRC-010
+    label: Fong-Spivak compositional anchor
+    title: "Seven Sketches in Compositionality"
+    type: secondary
+    venue: "Applied category theory literature"
+    author: "Fong, B.; Spivak, D."
+    year: 2019
+    url: "https://arxiv.org/abs/1803.05316"
+    evidence_role: "open networks and cospan composition background"
+
+  - id: LL-SRC-011
+    label: Baez-Pollard black-boxing anchor
+    title: "A compositional framework for reaction networks"
+    type: secondary
+    venue: "Reviews in Mathematical Physics"
+    author: "Baez, J.; Pollard, B."
+    year: 2017
+    url: "https://arxiv.org/abs/1704.02051"
+    evidence_role: "black-boxing as compositional discipline"
