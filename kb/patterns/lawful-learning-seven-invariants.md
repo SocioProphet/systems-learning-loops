@@ -38,13 +38,13 @@ Without this pattern, the system tends to show:
 
 The seven governance invariants provide the operational countermeasures:
 
-1. **May-Wigner stability monitor** — requires a declared stability monitor while preserving the typological boundary of the random-matrix analogy.
-2. **Control-plane / data-plane separation** — requires explicit separation between routing/admission logic and computation/output flow.
-3. **Tail-integral audit allocation** — requires explicit tail-risk audit allocation beyond expected-case coverage.
-4. **Emergent-discretization discipline** — requires logged replay-sealed records for grokking, phase transitions, feature splitting, and loss-cliff events.
-5. **Composition-superposition allocation** — requires circuit declarations to state whether the behavior is modeled as composition, superposition, mixed, or unknown.
-6. **Anti-satisficing continuation** — prevents a run from halting merely because a sufficient condition has been met.
-7. **Epistemic non-collapse** — requires every claim to preserve its M/T/S/E/G tag discipline.
+1. **May-Wigner stability monitor** — `may_wigner_monitor_declared` requires a declared stability monitor while preserving the typological boundary of the random-matrix analogy.
+2. **Control-plane / data-plane separation** — `control_data_plane_separation` requires explicit separation between routing/admission logic and computation/output flow.
+3. **Tail-integral audit allocation** — `tail_audit_allocated` requires explicit tail-risk audit allocation beyond expected-case coverage.
+4. **Emergent-discretization discipline** — `emergent_discretization_logged` requires logged replay-sealed records for grokking, phase transitions, feature splitting, and loss-cliff events.
+5. **Composition-superposition allocation** — `composition_superposition_declared` requires circuit declarations to state whether the behavior is modeled as composition, superposition, mixed, or unknown.
+6. **Anti-satisficing continuation** — `anti_satisficing_continuation` prevents a run from halting merely because a sufficient condition has been met.
+7. **Epistemic non-collapse** — `epistemic_non_collapse` requires every claim to preserve its M/T/S/E/G tag discipline.
 
 ## Categorical substrate
 
