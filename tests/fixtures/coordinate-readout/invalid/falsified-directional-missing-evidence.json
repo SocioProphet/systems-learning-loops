@@ -1,0 +1,7 @@
+{
+  "evidence_class": "computational_diagnostic",
+  "statuses": {
+    "protocol_valid": true,
+    "prediction_outcome": "falsified_directional"
+  }
+}
