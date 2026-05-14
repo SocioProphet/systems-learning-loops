@@ -7,6 +7,7 @@ from pathlib import Path
 import unittest
 
 SCRIPT = Path("scripts/replay_coordinate_basis_baseline_v0.py")
+CONVENTION = Path("kb/conventions/coordinate-basis-baseline-v0.convention.yaml")
 
 
 def load_module():
@@ -16,6 +17,24 @@ def load_module():
     assert spec.loader is not None
     spec.loader.exec_module(module)
     return module
+
+
+def convention_multiplication_table() -> tuple[tuple[int, ...], ...]:
+    """Parse the committed convention table without adding a YAML dependency."""
+    text = CONVENTION.read_text(encoding="utf-8")
+    start = text.index("  multiplication_table:")
+    end = text.index("\n\ncoordinate_basis:", start)
+    block = text[start:end]
+    rows: list[tuple[int, ...]] = []
+    symbol_to_code = {"0": 0, "1": 1, "alpha": 2, "alpha+1": 3}
+    for line in block.splitlines():
+        stripped = line.strip()
+        if not stripped.startswith("- ["):
+            continue
+        values = stripped.removeprefix("- [").removesuffix("]")
+        row = tuple(symbol_to_code[item.strip().strip('"')] for item in values.split(","))
+        rows.append(row)
+    return tuple(rows)
 
 
 class CoordinateBasisBaselineReplayTests(unittest.TestCase):
@@ -28,6 +47,12 @@ class CoordinateBasisBaselineReplayTests(unittest.TestCase):
             self.replay.EXPECTED_MUL_TABLE,
         )
         self.replay.assert_gf4_table()
+
+    def test_runtime_multiplication_table_matches_convention_yaml(self) -> None:
+        self.assertEqual(
+            tuple(tuple(row) for row in self.replay.multiplication_table()),
+            convention_multiplication_table(),
+        )
 
     def test_fixture_is_deterministic_all_16_pairs(self) -> None:
         fixture = self.replay.fixture()
