@@ -91,6 +91,20 @@ It does not rule out:
 
 A protocol-invalid result is a failed measurement, not a negative diagnostic result.
 
+### 3.4 Protocol-validity priority rule
+
+Protocol validity is evaluated before prediction outcome.
+
+If the involution tolerance fails, the run is protocol-invalid rather than directionally falsified:
+
+```yaml
+if involution_error > tolerance:
+  protocol_valid: false
+  prediction_outcome: protocol_incomplete
+```
+
+A run may receive `falsified_directional` only after structural execution has passed the pinned protocol, including the involution tolerance check.
+
 ## 4. `falsified_directional`
 
 ### 4.1 Definition
@@ -99,10 +113,10 @@ A valid run receives `falsified_directional` if:
 
 ```text
 protocol_valid == true
+involution_error <= tolerance
 and one or more of:
   selectivity_lift_vs_coordinate <= 1
   balance_metric_corrected > balance_metric_coordinate
-  involution_error > tolerance
 ```
 
 ### 4.2 What it licenses
@@ -135,6 +149,32 @@ It does not rule out:
 ```
 
 Any alternative construction must be introduced by a new boundary document before rerun. It may not be selected post hoc to rescue the prediction.
+
+### 4.4 Required falsification evidence
+
+Every receipt carrying `prediction_outcome: falsified_directional` must include:
+
+```yaml
+falsification_evidence:
+  triggering_conditions:
+    - selectivity_lift_vs_coordinate <= 1
+  all_conditions_status:
+    selectivity_lift_vs_coordinate: number
+    selectivity_threshold: 1.0
+    selectivity_passed: boolean
+    balance_metric_corrected: number
+    balance_metric_coordinate: number
+    balance_passed: boolean
+    involution_error: number
+    involution_tolerance: number
+    involution_passed: true
+```
+
+`triggering_conditions` records which condition or conditions caused the falsification verdict. It must not list conditions that did not actually fail.
+
+`all_conditions_status` records every checked condition, whether triggering or not. This distinguishes a clean single-condition falsification from a multi-condition collapse.
+
+The `involution_passed` value must be `true` for `falsified_directional`; if involution fails, the run is protocol-invalid under the priority rule.
 
 ## 5. `weak_support`
 
@@ -292,16 +332,27 @@ confirmation_threshold
 
 The confirmation threshold is fixed at `5` for this v0 diagnostic unless a later boundary document supersedes it before execution.
 
-## 9. Consequence table
+## 9. Receipt evidence symmetry inheritance rule
 
-| Protocol valid | Prediction outcome | Licensed update | Ruled out |
-|---|---|---|---|
-| false | protocol_incomplete | no empirical inference; repair protocol | nothing about the hypothesis |
-| true | falsified_directional | v0 directional prediction failed | only v0 support under pinned protocol |
-| true | weak_support | weak v0 computational support | empirical-pair confirmation and theorem claims |
-| true | empirical_pair_confirmed | v0 empirical pair confirmed | theorem / cross-repo / Clay claims still not licensed |
+Future diagnostics may inherit this outcome framework only if their boundary document explicitly adopts both halves of the receipt-evidence discipline:
 
-## 10. Composition rule
+```text
+positive-outcome metric evidence
+falsification-evidence symmetry
+```
+
+A diagnostic may not inherit only the positive-outcome metric requirement while omitting falsification evidence. A diagnostic may also define a different outcome framework, but that difference must be declared in its boundary document before execution.
+
+## 10. Consequence table
+
+| Protocol valid | Prediction outcome | Required evidence | Licensed update | Ruled out |
+|---|---|---|---|---|
+| false | protocol_incomplete | protocol failure reason | no empirical inference; repair protocol | nothing about the hypothesis |
+| true | falsified_directional | falsification_evidence block | v0 directional prediction failed | only v0 support under pinned protocol |
+| true | weak_support | positive-outcome metrics | weak v0 computational support | empirical-pair confirmation and theorem claims |
+| true | empirical_pair_confirmed | positive-outcome metrics | v0 empirical pair confirmed | theorem / cross-repo / Clay claims still not licensed |
+
+## 11. Composition rule
 
 No diagnostic outcome may be composed into a higher-level claim without a composition warrant.
 
@@ -318,7 +369,7 @@ composition_warrant:
 
 Without a composition warrant, citations to this diagnostic remain descriptive.
 
-## 11. Canonical computational-diagnostic non-license list
+## 12. Canonical computational-diagnostic non-license list
 
 Because this artifact's maximum evidence class is `computational_diagnostic`, no outcome from this diagnostic licenses:
 
@@ -338,7 +389,7 @@ This list is stated here because these are known adjacent overreach surfaces for
 
 If a future diagnostic has different adjacent overreach surfaces, it must add its own local non-license list rather than silently relying on this one.
 
-## 12. Nonclaims
+## 13. Nonclaims
 
 This outcome semantics note does not claim:
 
