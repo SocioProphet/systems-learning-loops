@@ -34,10 +34,15 @@ BOUNDARY_MERGE_COMMIT = "4b9a9082765dfe1884bb872e8470e5af2df5d963"
 CLAIM_ID = "COORD_READOUT_INVOLUTION_001"
 PATTERN = "coordinate-basis-vs-readout-basis-involution"
 EVIDENCE_CLASS = "computational_diagnostic"
+ALLOWED_EVIDENCE_CLASSES = ("computational_diagnostic",)
 EXPERIMENT_ID = "coordinate-readout-cipher-v0"
 FIELD_ELEMENTS = (0, 1, 2, 3)  # 0, 1, alpha, alpha+1 under F2[alpha]/(alpha^2+alpha+1)
 NONZERO_ELEMENTS = (1, 2, 3)
 ELEMENT_NAMES = {0: "0", 1: "1", 2: "alpha", 3: "alpha+1"}
+PINNED_READOUTS = (
+    {"name": "L_1", "m": 1, "target_multiplier": 1},
+    {"name": "L_alpha", "m": 2, "target_multiplier": 2},
+)
 EPSILON_FLOOR = 1.0e-12
 INVOLUTION_TOLERANCE = 1.0e-12
 
@@ -154,12 +159,7 @@ def observed_displacement_for_translation(a: int, m: int) -> tuple[float, float]
 
 
 def selectivity_for_readout(m: int, target_multiplier: int) -> dict[str, Any]:
-    """Compute v0 selectivity for a predeclared readout.
-
-    `target_multiplier=1` scores L_1 against iota(a). `L_alpha` is reported as
-    a diagnostic only and uses target_multiplier=alpha so it is not silently
-    compared against the wrong label.
-    """
+    """Compute v0 selectivity for a predeclared readout."""
     margins = []
     per_mask: dict[str, Any] = {}
     for a in NONZERO_ELEMENTS:
@@ -182,6 +182,26 @@ def selectivity_for_readout(m: int, target_multiplier: int) -> dict[str, Any]:
             "selectivity_margin": margin,
         }
     return {"selectivity": sum(margins) / len(margins), "per_mask": per_mask}
+
+
+def pinned_readout_results() -> dict[str, Any]:
+    results: dict[str, Any] = {}
+    for readout in PINNED_READOUTS:
+        results[readout["name"]] = {
+            "m": ELEMENT_NAMES[readout["m"]],
+            "target_multiplier": ELEMENT_NAMES[readout["target_multiplier"]],
+            "selectivity": selectivity_for_readout(readout["m"], readout["target_multiplier"]),
+            "balance_metric": balance_metric(readout["m"]),
+        }
+    return results
+
+
+def aggregate_selectivity(readout_results: dict[str, Any]) -> float:
+    return sum(item["selectivity"]["selectivity"] for item in readout_results.values()) / len(readout_results)
+
+
+def aggregate_balance(readout_results: dict[str, Any]) -> float:
+    return sum(item["balance_metric"] for item in readout_results.values()) / len(readout_results)
 
 
 def composability_metric() -> float:
@@ -256,6 +276,9 @@ def compute_receipt(
     code_hash: str = "UNCOMMITTED",
     generated_at: str | None = None,
 ) -> dict[str, Any]:
+    if EVIDENCE_CLASS not in ALLOWED_EVIDENCE_CLASSES:
+        raise ValueError(f"unsupported evidence class: {EVIDENCE_CLASS}")
+
     repo_root = repo_root or Path.cwd()
     generated_at = generated_at or _dt.datetime.now(_dt.timezone.utc).isoformat()
 
@@ -263,10 +286,9 @@ def compute_receipt(
     baseline_selectivity = baseline.get("coordinate_basis_selectivity")
     baseline_balance = baseline.get("coordinate_basis_balance_metric")
 
-    selected_readout = 1  # L_1 is the predeclared v0 readout for scoring.
-    corrected_selectivity = selectivity_for_readout(selected_readout, target_multiplier=1)
-    l_alpha_diagnostic = selectivity_for_readout(2, target_multiplier=2)
-    corrected_balance = balance_metric(selected_readout)
+    readout_results = pinned_readout_results()
+    corrected_selectivity = aggregate_selectivity(readout_results)
+    corrected_balance = aggregate_balance(readout_results)
     involution_error = v4_involution_error()
     z4 = z4_rejection()
 
@@ -284,7 +306,8 @@ def compute_receipt(
     readout_basis_hash = sha256_json(readout_basis_block)
 
     protocol_valid = bool(
-        z4["z4_rejected"]
+        boundary_hash
+        and z4["z4_rejected"]
         and baseline.get("provided", baseline_path is not None)
         and baseline_selectivity is not None
         and baseline_balance is not None
@@ -295,7 +318,7 @@ def compute_receipt(
 
     outcome_label, observed_lift = classify_outcome(
         protocol_valid,
-        corrected_selectivity["selectivity"],
+        corrected_selectivity,
         baseline_selectivity,
         corrected_balance,
         baseline_balance,
@@ -305,8 +328,8 @@ def compute_receipt(
     core_values = {
         "construction": "GF(4) F2[alpha]/(alpha^2+alpha+1), L1/Lalpha",
         "readout_basis": readout_basis_block,
+        "readout_results": readout_results,
         "corrected_selectivity": corrected_selectivity,
-        "l_alpha_diagnostic": l_alpha_diagnostic,
         "balance_metric": corrected_balance,
         "involution_error": involution_error,
         "z4": z4,
@@ -330,8 +353,7 @@ def compute_receipt(
             "presentation": "F2[alpha]/(alpha^2 + alpha + 1)",
             "element_order": [ELEMENT_NAMES[x] for x in FIELD_ELEMENTS],
             "mols_pair": ["L_1", "L_alpha"],
-            "selected_readout_for_scoring": "L_1",
-            "sensitivity_readouts_reported_not_scored": ["L_alpha"],
+            "pinned_readouts_for_scoring": [item["name"] for item in PINNED_READOUTS],
             "involution_operators": "V4_translations_tau_a",
             "z4_rejected": z4["z4_rejected"],
         },
@@ -344,12 +366,11 @@ def compute_receipt(
         },
         "corrected_run": {
             "involution_error": involution_error,
-            "selectivity": corrected_selectivity["selectivity"],
-            "selectivity_by_mask": corrected_selectivity["per_mask"],
+            "selectivity": corrected_selectivity,
+            "selectivity_by_readout": readout_results,
             "selectivity_lift_vs_coordinate": observed_lift,
             "balance_metric": corrected_balance,
             "composability_metric": composability_metric(),
-            "l_alpha_diagnostic_not_scored": l_alpha_diagnostic,
             "outcome_label": outcome_label,
         },
         "statuses": {
