@@ -9,6 +9,14 @@ Evidence class: computational_diagnostic.
 This module does not make theorem-facing claims. It computes the pinned
 GF(4)/V4 readout diagnostic and produces a receipt that separates protocol
 validity from prediction outcome.
+
+Implementation correction record:
+- Incorrect computation: Euclidean after-minus-before under the iota embedding.
+- Correct computation: GF(4) group displacement first, then iota embedding:
+      delta = iota(L_m(tau_a(x), y) + L_m(x, y))
+- Rationale: Euclidean subtraction is not the pinned V4 translation diagnostic
+  and cancels under uniform binary coordinates. The corrected computation tests
+  the group displacement induced by the V4 translation mask.
 """
 
 from __future__ import annotations
