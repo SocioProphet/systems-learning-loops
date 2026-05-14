@@ -248,7 +248,51 @@ statuses.prediction_outcome
 
 and the associated metrics.
 
-## 8. Consequence table
+## 8. Positive-outcome distinction rule
+
+The distinction between `weak_support` and `empirical_pair_confirmed` is a **threshold-strength distinction** inside the v0 metric, not a replication distinction and not a partial-scope distinction.
+
+Concretely:
+
+```text
+weak_support:
+  1 < selectivity_lift_vs_coordinate < 5
+
+empirical_pair_confirmed:
+  selectivity_lift_vs_coordinate >= 5
+```
+
+both with:
+
+```text
+protocol_valid == true
+balance_metric_corrected <= balance_metric_coordinate
+involution_error <= tolerance
+```
+
+Therefore:
+
+```text
+- weak_support is not a single-run placeholder for later replication;
+- empirical_pair_confirmed is not a statement about replication count;
+- weak_support is not partial confirmation of only some downstream mathematical scope;
+- empirical_pair_confirmed does not widen the scope beyond the pinned v0 diagnostic.
+```
+
+Every receipt carrying either positive outcome must record the actual measured values for at least:
+
+```text
+selectivity_lift_vs_coordinate
+balance_metric_corrected
+balance_metric_coordinate
+involution_error
+tolerance
+confirmation_threshold
+```
+
+The confirmation threshold is fixed at `5` for this v0 diagnostic unless a later boundary document supersedes it before execution.
+
+## 9. Consequence table
 
 | Protocol valid | Prediction outcome | Licensed update | Ruled out |
 |---|---|---|---|
@@ -257,7 +301,7 @@ and the associated metrics.
 | true | weak_support | weak v0 computational support | empirical-pair confirmation and theorem claims |
 | true | empirical_pair_confirmed | v0 empirical pair confirmed | theorem / cross-repo / Clay claims still not licensed |
 
-## 9. Composition rule
+## 10. Composition rule
 
 No diagnostic outcome may be composed into a higher-level claim without a composition warrant.
 
@@ -274,7 +318,27 @@ composition_warrant:
 
 Without a composition warrant, citations to this diagnostic remain descriptive.
 
-## 10. Nonclaims
+## 11. Canonical computational-diagnostic non-license list
+
+Because this artifact's maximum evidence class is `computational_diagnostic`, no outcome from this diagnostic licenses:
+
+```text
+- theorem-facing claims;
+- A2-track promotion;
+- I-12 claims;
+- Hodge claims;
+- BSD claims;
+- Con(PA) claims;
+- P vs NP claims;
+- RH / GRH claims;
+- Clay-prize-level claims.
+```
+
+This list is stated here because these are known adjacent overreach surfaces for coordinate/readout-style diagnostics. Future diagnostics may inherit this list only if their boundary document explicitly says they use the canonical computational-diagnostic non-license list.
+
+If a future diagnostic has different adjacent overreach surfaces, it must add its own local non-license list rather than silently relying on this one.
+
+## 12. Nonclaims
 
 This outcome semantics note does not claim:
 
