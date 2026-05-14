@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+"""Replay the canonical coordinate-basis baseline v0.
+
+This script produces a computational_diagnostic_baseline receipt under:
+
+  kb/conventions/coordinate-basis-baseline-v0.convention.yaml
+
+It is deterministic for a fixed --generated-at value and does not invent
+empirical values. Selectivity and balance are computed from the declared
+synthetic fixture over all 16 points in GF(4)^2.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -9,6 +20,7 @@ import math
 from pathlib import Path
 from typing import Any, Iterable
 
+HASH_ALGORITHM = "sha256"
 BASELINE_ID = "coordinate-readout-cipher-v0-baseline"
 CLAIM_ID = "COORD_READOUT_INVOLUTION_001"
 CONVENTION_ID = "coordinate-basis-baseline-v0"
@@ -19,6 +31,12 @@ FIELD = (0, 1, 2, 3)
 NONZERO = (1, 2, 3)
 NAMES = {0: "0", 1: "1", 2: "alpha", 3: "alpha+1"}
 READOUTS = (("L_1", 1, 1), ("L_alpha", 2, 2))
+EXPECTED_MUL_TABLE = (
+    (0, 0, 0, 0),
+    (0, 1, 2, 3),
+    (0, 2, 3, 1),
+    (0, 3, 1, 2),
+)
 
 
 def sha_file(path: Path) -> str | None:
@@ -42,6 +60,16 @@ def mul(x: int, y: int) -> int:
     return (c0 ^ c2) | ((c1 ^ c2) << 1)
 
 
+def multiplication_table() -> list[list[int]]:
+    return [[mul(x, y) for y in FIELD] for x in FIELD]
+
+
+def assert_gf4_table() -> None:
+    actual = tuple(tuple(row) for row in multiplication_table())
+    if actual != EXPECTED_MUL_TABLE:
+        raise AssertionError(f"GF(4) multiplication table mismatch: {actual!r}")
+
+
 def iota(x: int) -> list[float]:
     return [float(x & 1), float((x >> 1) & 1)]
 
@@ -60,6 +88,8 @@ def pairs() -> list[tuple[int, int]]:
 
 def mean(points: Iterable[list[float]]) -> list[float]:
     points = list(points)
+    if not points:
+        raise ValueError("cannot average empty point set")
     return [sum(p[0] for p in points) / len(points), sum(p[1] for p in points) / len(points)]
 
 
@@ -69,8 +99,10 @@ def nd(p: list[float], q: list[float]) -> float:
 
 def coordinate_delta(a: int, m: int) -> list[float]:
     return mean([
-        [iota(readout(m, tau(a, x), y))[0] - iota(readout(m, x, y))[0],
-         iota(readout(m, tau(a, x), y))[1] - iota(readout(m, x, y))[1]]
+        [
+            iota(readout(m, tau(a, x), y))[0] - iota(readout(m, x, y))[0],
+            iota(readout(m, tau(a, x), y))[1] - iota(readout(m, x, y))[1],
+        ]
         for x, y in pairs()
     ])
 
@@ -103,6 +135,17 @@ def balance(m: int) -> float:
     return nd(centroid(m), [0.5, 0.5])
 
 
+def v4_involution_error() -> float:
+    failures = 0
+    total = 0
+    for a in NONZERO:
+        for x in FIELD:
+            total += 1
+            if tau(a, tau(a, x)) != x:
+                failures += 1
+    return failures / total if total else 1.0
+
+
 def fixture() -> dict[str, Any]:
     return {
         "fixture_id": "coordinate-basis-baseline-synthetic-v0",
@@ -117,22 +160,36 @@ def fixture() -> dict[str, Any]:
 
 
 def receipt(generated_at: str | None = None) -> dict[str, Any]:
+    assert_gf4_table()
     generated_at = generated_at or dt.datetime.now(dt.timezone.utc).isoformat()
     results = {
-        name: {"m": NAMES[m], "target_multiplier": NAMES[t], "selectivity": selectivity(m, t), "balance_metric": balance(m)}
+        name: {
+            "m": NAMES[m],
+            "target_multiplier": NAMES[t],
+            "selectivity": selectivity(m, t),
+            "balance_metric": balance(m),
+        }
         for name, m, t in READOUTS
     }
-    result = {
+    result: dict[str, Any] = {
         "artifact_class": "computational_diagnostic_baseline_receipt",
         "evidence_class": "computational_diagnostic_baseline",
+        "hash_algorithm": HASH_ALGORITHM,
         "baseline_id": BASELINE_ID,
         "claim_id": CLAIM_ID,
         "convention_id": CONVENTION_ID,
         "diagnostic_ref": str(DIAGNOSTIC),
         "fixture": fixture(),
+        "gf4_multiplication_table_verified": True,
         "coordinate_basis_selectivity": sum(v["selectivity"]["selectivity"] for v in results.values()) / len(results),
         "coordinate_basis_balance_metric": sum(v["balance_metric"] for v in results.values()) / len(results),
-        "coordinate_basis_involution_error": 0.0,
+        "coordinate_basis_involution_error": v4_involution_error(),
+        "value_provenance": {
+            "coordinate_basis_selectivity": "replayed",
+            "coordinate_basis_balance_metric": "replayed",
+            "coordinate_basis_involution_error": "analytic",
+            "null_centroid": "analytic",
+        },
         "readout_results": results,
         "input_hashes": {
             "code_hash": sha_file(Path(__file__)),
@@ -142,9 +199,11 @@ def receipt(generated_at: str | None = None) -> dict[str, Any]:
             "boundary_hash": sha_file(BOUNDARY),
         },
         "generated_at": generated_at,
+        "time_standard": "UTC_ISO_8601",
         "nonclaims": [
             "This baseline receipt is not the corrected readout result.",
             "This baseline receipt is not a prediction outcome.",
+            "This baseline receipt is not a null hypothesis.",
             "This baseline receipt is not theorem-facing evidence.",
         ],
     }
@@ -153,11 +212,12 @@ def receipt(generated_at: str | None = None) -> dict[str, Any]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description="Replay coordinate-basis baseline v0.")
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--generated-at", default=None, help="UTC ISO-8601 timestamp to pin receipt generation.")
     args = parser.parse_args()
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    args.out.write_text(json.dumps(receipt(), indent=2, sort_keys=True) + "\n")
+    args.out.write_text(json.dumps(receipt(args.generated_at), indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return 0
 
 
