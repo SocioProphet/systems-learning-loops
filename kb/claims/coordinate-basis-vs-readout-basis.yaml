@@ -1,0 +1,49 @@
+claim_id: COORD_READOUT_INVOLUTION_001
+pattern: coordinate-basis-vs-readout-basis-involution
+status: empirical_basis_confirmed__positive_prediction_pending
+claim_class: mixed
+claim_tags:
+  - M
+  - E
+  - T
+claim_text: >
+  An involutive transform such as a sign flip, cipher mask, or Z/2 action achieves
+  selectivity only when applied in a basis aligned to the readout structure of interest.
+  Coordinate-basis involutions preserve the involution property but have no guaranteed
+  alignment to a specified readout direction. The order-four algebraic structure that
+  simultaneously supports involution, selectivity, balance, and composability is the
+  Klein four-group V4 = Z/2 x Z/2 realized through GF(4)-based mutually orthogonal
+  Latin squares, not the cyclic group Z4.
+evidence_basis:
+  empirical_measurement_refs:
+    - cipher-involution-experiment
+  mathematical_dependencies:
+    - "V4 = Z/2 x Z/2"
+    - "GF(4) = GF(2^2)"
+    - "MOLS from AG(2, GF(4))"
+    - "cyclic Z4 even-order orthogonality failure"
+  typological_parallel_targets:
+    - Hodge
+    - BSD
+    - Con(PA)
+    - mu2
+    - spectral
+empirical_status:
+  confirmed:
+    - >
+      Coordinate-basis cipher variants achieved involution error below machine precision
+      while retaining poor selectivity, approximately 0.015.
+  pending:
+    - >
+      Corrected centroid/readout-basis run using proper GF(4)-MOLS masks is predicted
+      to increase selectivity by 5x to 50x.
+nonclaims:
+  - "Does not prove Hodge, BSD, Con(PA), P vs NP, RH/GRH, or any Clay problem."
+  - "Typological parallels are structural analogies, not formal reductions."
+  - "The empirical basis is a toy embedding experiment, not a measurement in the mathematical settings."
+  - "The readout-basis identification in each target repo remains the hard open problem."
+  - "The positive readout-basis empirical run is pending until rerun or raw artifact import."
+cross_repo_reference_policy: >
+  This claim is the canonical cross-repo source. Downstream math repositories should
+  reference this claim or its pattern page with thin backlinks rather than re-copying
+  the full argument locally.
