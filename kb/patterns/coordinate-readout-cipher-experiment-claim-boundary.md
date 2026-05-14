@@ -18,6 +18,95 @@ involution + selectivity + balance + composability
 
 The experiment is not theorem-facing. It is a computational diagnostic for the canonical KB pattern.
 
+### 0.1 Scope separation
+
+This experiment is independent of the `np-program` A2 track.
+
+It does not depend on:
+
+```text
+A2 local cube-root normalization
+A2 Stage-1 harness
+A2 Stage-2 attestation
+C-3' cohomological obstruction work
+```
+
+The load-bearing convention here is finite-field / finite-geometry structure:
+
+```text
+GF(4), additive V4, affine MOLS pair L_1 / L_alpha, and Z4 rejection.
+```
+
+The word `cipher` is interpretive framing. The empirical content is:
+
+```text
+basis construction, translation masks, involution error, selectivity margin, balance metric, composability metric, provenance.
+```
+
+### 0.2 Correction record
+
+This document corrects a prior possible misreading of `involution`.
+
+Incorrect reading:
+
+```text
+L_m itself is an involution under repeated application.
+```
+
+That interpretation fails for `L_alpha`; repeated application of the affine readout map does not generally return the identity.
+
+Correct reading:
+
+```text
+involution = additive V4 translation involution in GF(4).
+```
+
+For each `a in GF(4)`, the translation:
+
+```text
+tau_a(x) = x + a
+```
+
+satisfies:
+
+```text
+tau_a(tau_a(x)) = x
+```
+
+because `GF(4)` has characteristic 2. This is the all-involutive `V4 = Z/2 x Z/2` structure. The maps `L_1` and `L_alpha` are readout/MOLS maps, not the involutions themselves.
+
+Why this correction matters:
+
+```text
+- it makes Z4 rejection structural rather than cosmetic;
+- it prevents false failure of L_alpha under the wrong involution test;
+- it makes the corrected centroid/readout experiment test V4 translation masks, not Latin-map self-inversion.
+```
+
+Trigger for the correction: review of the `L_alpha` repeated-application behavior and re-derivation of the characteristic-two translation semantics.
+
+### 0.3 Dependency map and reproducibility hooks
+
+Merged dependencies:
+
+```text
+kb/patterns/coordinate-basis-vs-readout-basis-involution.md
+kb/claims/coordinate-basis-vs-readout-basis.yaml
+kb/sources/cipher-involution-experiment.yaml
+```
+
+Implementation must bind its run to:
+
+```text
+1. this claim-boundary document by path and hash;
+2. the code hash of the run implementation;
+3. the data hash or imported baseline hash;
+4. the convention hash for the readout-basis block;
+5. the generated result artifact hash.
+```
+
+Another team must be able to reproduce the run from those artifacts without inferring any unrecorded convention.
+
 ## 1. Evidence class
 
 The corrected run has evidence class:
@@ -240,6 +329,20 @@ readout_basis:
 
 If this block changes after the run begins, the convention hash changes and the run fails the boundary check.
 
+### 6.6 Centroid falsifier
+
+The centroid predeclaration is falsifiable.
+
+It fails as a readout-basis diagnostic if any of the following occurs:
+
+```text
+- the null centroid differs from (1/2, 1/2) under the declared iota embedding and uniform GF(4)^2 measure;
+- centroid values are fitted from corrected-run data;
+- per-run rescaling is applied;
+- the corrected run has balance_metric > baseline balance_metric while still being claimed as prediction-confirming;
+- the readout-basis convention hash is absent or generated after mask construction/scoring.
+```
+
 ## 7. Selectivity metric v0
 
 The v0 selectivity metric is a target-vs-incorrect-mask margin in the fixed `iota` readout coordinates.
@@ -400,7 +503,8 @@ This experiment does not claim:
 - that a negative result refutes the mathematical analogies;
 - that GF(4) is the unique useful finite-field construction beyond this pinned run;
 - that cipher terminology is the only interpretation of the transform;
-- that the affine MOLS maps L_m themselves are involutions.
+- that the affine MOLS maps L_m themselves are involutions;
+- that this experiment depends on or validates the np-program A2 track.
 ```
 
 ## 11. Composition rule
