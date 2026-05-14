@@ -1,0 +1,59 @@
+id: richter-saturation-part-a
+label: Part A Richter saturation measurement
+title: "Richter saturation finite-window prime-harness measurement"
+type: empirical_measurement
+status: finite_window_measurement_recorded
+source_class: internal_experiment_summary
+provenance:
+  capture_mode: conversation_handoff
+  raw_artifact_available_in_repo: false
+  raw_artifact_status: pending_import_or_replay
+  downstream_repo: SocioProphet/hphd-zeta-mirror-lattice
+claim_tags:
+  - E
+  - measurement
+  - finite_window
+measured_rows:
+  - interval: I1
+    n_boxes: 4
+    peak_r2: 0.949
+    at_T: 30
+    interpretation: over_saturation_above_T_30
+  - interval: I1
+    n_boxes: 16
+    peak_r2: 0.954
+    at_T: 1000
+    interpretation: still_climbing
+  - interval: I2
+    n_boxes: 32
+    peak_r2: 0.799
+    at_T: 300
+    interpretation: over_saturation_above_T_300
+  - interval: I3
+    n_boxes: 4
+    peak_r2: 0.908
+    at_T: 1000
+    interpretation: climbing_bandwidth_ok
+  - interval: I3
+    n_boxes: 32
+    peak_r2: 0.206
+    at_T: 1000
+    interpretation: bandwidth_starved
+  - interval: I4
+    n_boxes: 4
+    peak_r2: 0.095
+    at_T: 1000
+    interpretation: structurally_underpowered
+spec_implications:
+  - "SPEC v0.2 Delta-u/N correction is supported by the observed over-saturation behavior."
+  - "Model-1 floor criterion should exclude intervals with VarExpl(Model 1, N*) < 0.30 from G4 novelty scoring."
+  - "Saturation envelope Env(N) = max_{N' <= N} VarExpl(Model 1, N') should be emitted as a first-class M2a artifact."
+nonclaims:
+  - "Does not constitute RH or GRH evidence."
+  - "Does not prove an asymptotic residual theorem."
+  - "Does not imply I4 is mathematically unimportant."
+  - "Does not generalize beyond the finite-window measurement without a uniformity proof."
+review_notes:
+  - >
+    This source record should be paired with downstream SPEC documentation in
+    SocioProphet/hphd-zeta-mirror-lattice. Raw replay artifact remains pending.
