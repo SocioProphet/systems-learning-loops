@@ -25,8 +25,6 @@ BASELINE_ID = "coordinate-readout-cipher-v0-baseline"
 CLAIM_ID = "COORD_READOUT_INVOLUTION_001"
 CONVENTION_ID = "coordinate-basis-baseline-v0"
 CONVENTION = Path("kb/conventions/coordinate-basis-baseline-v0.convention.yaml")
-DIAGNOSTIC = Path("experiments/coordinate_readout_cipher_diagnostic.py")
-BOUNDARY = Path("kb/patterns/coordinate-readout-cipher-experiment-claim-boundary.md")
 FIELD = (0, 1, 2, 3)
 NONZERO = (1, 2, 3)
 NAMES = {0: "0", 1: "1", 2: "alpha", 3: "alpha+1"}
@@ -178,7 +176,7 @@ def receipt(generated_at: str | None = None) -> dict[str, Any]:
         "baseline_id": BASELINE_ID,
         "claim_id": CLAIM_ID,
         "convention_id": CONVENTION_ID,
-        "diagnostic_ref": str(DIAGNOSTIC),
+        "diagnostic_ref": "experiments/coordinate_readout_cipher_diagnostic.py",
         "fixture": fixture(),
         "gf4_multiplication_table_verified": True,
         "coordinate_basis_selectivity": sum(v["selectivity"]["selectivity"] for v in results.values()) / len(results),
@@ -193,10 +191,8 @@ def receipt(generated_at: str | None = None) -> dict[str, Any]:
         "readout_results": results,
         "input_hashes": {
             "code_hash": sha_file(Path(__file__)),
-            "diagnostic_code_hash": sha_file(DIAGNOSTIC),
             "data_hash": sha_json(fixture()),
             "convention_hash": sha_file(CONVENTION),
-            "boundary_hash": sha_file(BOUNDARY),
         },
         "generated_at": generated_at,
         "time_standard": "UTC_ISO_8601",
