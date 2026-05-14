@@ -1,0 +1,115 @@
+@prefix il: <https://socioprophet.org/ontology/internet-legends#> .
+@prefix inv: <https://socioprophet.org/ontology/involution-selectivity#> .
+@prefix sp: <https://socioprophet.org/ontology/core#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+################################################################################
+# Involution / selectivity vocabulary
+# Canonical pattern:
+#   coordinate-basis-vs-readout-basis-involution
+################################################################################
+
+inv:InvolutiveTransform a rdfs:Class ;
+  rdfs:label "Involutive Transform" ;
+  rdfs:comment "A transform T satisfying T composed with T equals identity on the declared domain." .
+
+inv:CoordinateBasis a rdfs:Class ;
+  rdfs:label "Coordinate Basis" ;
+  rdfs:comment "A representation basis in which a transform may be easy to express but not necessarily aligned to the target observable." .
+
+inv:ReadoutBasis a rdfs:Class ;
+  rdfs:label "Readout Basis" ;
+  rdfs:comment "A basis aligned to the observable, boundary direction, centroid, cycle class, Selmer direction, or other readout structure of interest." .
+
+inv:SelectivityProperty a rdfs:Class ;
+  rdfs:label "Selectivity Property" ;
+  rdfs:comment "The property that a transform acts on the intended readout direction rather than spraying effect across unrelated coordinates." .
+
+inv:BalancedAction a rdfs:Class ;
+  rdfs:label "Balanced Action" ;
+  rdfs:comment "A transform or action whose row/column/channel usage is balanced under the declared combinatorial design." .
+
+inv:ComposableAction a rdfs:Class ;
+  rdfs:label "Composable Action" ;
+  rdfs:comment "A transform or action whose combination law remains inside the declared algebraic structure." .
+
+inv:KleinFourGroup a rdfs:Class ;
+  rdfs:label "Klein Four-Group" ;
+  rdfs:comment "The elementary abelian group V4 = Z/2 x Z/2, used here as the order-four all-involutive structure." .
+
+inv:GF4MOLS a rdfs:Class ;
+  rdfs:label "GF(4)-based MOLS" ;
+  rdfs:comment "Mutually orthogonal Latin squares constructed over GF(4), supplying the order-four balance/composability structure." .
+
+inv:CyclicZ4Rejection a rdfs:Class ;
+  rdfs:label "Cyclic Z4 Rejection" ;
+  rdfs:comment "A negative design result: cyclic Z4 is not an admissible substitute for the V4/GF(4) readout-basis structure." .
+
+inv:hasTransform a rdfs:Property ;
+  rdfs:domain il:Pattern ;
+  rdfs:range inv:InvolutiveTransform ;
+  rdfs:label "has transform" .
+
+inv:usesBasis a rdfs:Property ;
+  rdfs:domain inv:InvolutiveTransform ;
+  rdfs:range inv:CoordinateBasis ;
+  rdfs:label "uses basis" .
+
+inv:hasReadoutBasis a rdfs:Property ;
+  rdfs:domain il:Pattern ;
+  rdfs:range inv:ReadoutBasis ;
+  rdfs:label "has readout basis" .
+
+inv:hasSelectivityProperty a rdfs:Property ;
+  rdfs:domain inv:InvolutiveTransform ;
+  rdfs:range inv:SelectivityProperty ;
+  rdfs:label "has selectivity property" .
+
+inv:requiresBalance a rdfs:Property ;
+  rdfs:domain il:Pattern ;
+  rdfs:range inv:BalancedAction ;
+  rdfs:label "requires balance" .
+
+inv:requiresComposability a rdfs:Property ;
+  rdfs:domain il:Pattern ;
+  rdfs:range inv:ComposableAction ;
+  rdfs:label "requires composability" .
+
+inv:usesAlgebraicStructure a rdfs:Property ;
+  rdfs:domain il:Pattern ;
+  rdfs:range rdfs:Class ;
+  rdfs:label "uses algebraic structure" .
+
+inv:rejectsAlgebraicSubstitution a rdfs:Property ;
+  rdfs:domain il:Pattern ;
+  rdfs:range inv:CyclicZ4Rejection ;
+  rdfs:label "rejects algebraic substitution" .
+
+inv:empiricalStatus a rdfs:Property ;
+  rdfs:domain il:Claim ;
+  rdfs:range xsd:string ;
+  rdfs:label "empirical status" ;
+  rdfs:comment "Example values: negative_coordinate_basis_confirmed, positive_readout_basis_pending, empirical_pair_confirmed." .
+
+inv:typologicalParallel a rdfs:Property ;
+  rdfs:domain il:Pattern ;
+  rdfs:range xsd:string ;
+  rdfs:label "typological parallel" ;
+  rdfs:comment "Names a structural analogy target without asserting a formal reduction." .
+
+inv:CoordinateReadoutInvolutionPattern a il:Pattern ;
+  il:patternName "coordinate-basis-vs-readout-basis-involution" ;
+  il:conditions "An involutive transform is available, but the readout basis may differ from the coordinate basis." ;
+  il:symptoms "Machine-precision reversibility with poor selectivity for the target observable." ;
+  il:countermeasures "Declare the readout basis before evaluation; use V4/GF(4)-MOLS rather than cyclic Z4 for the order-four balanced structure." ;
+  inv:usesAlgebraicStructure inv:KleinFourGroup ;
+  inv:usesAlgebraicStructure inv:GF4MOLS ;
+  inv:rejectsAlgebraicSubstitution inv:CyclicZ4Rejection ;
+  inv:typologicalParallel "Hodge" ;
+  inv:typologicalParallel "BSD" ;
+  inv:typologicalParallel "Con(PA)" ;
+  inv:typologicalParallel "mu2 monodromy" ;
+  inv:typologicalParallel "spectral involution" .
