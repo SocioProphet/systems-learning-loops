@@ -1,0 +1,62 @@
+convention_id: GF4-V4-iota-v0
+status: locked_for_coordinate_readout_diagnostic_v0
+applies_to:
+  - coordinate-readout-cipher-v0
+  - COORD_READOUT_INVOLUTION_001
+field:
+  name: GF(4)
+  presentation: F2[alpha]/(alpha^2 + alpha + 1)
+  relation: alpha^2 = alpha + 1
+  characteristic: 2
+  elements:
+    - symbol: "0"
+      code: 0
+      f2_coordinates: [0, 0]
+    - symbol: "1"
+      code: 1
+      f2_coordinates: [1, 0]
+    - symbol: alpha
+      code: 2
+      f2_coordinates: [0, 1]
+    - symbol: alpha+1
+      code: 3
+      f2_coordinates: [1, 1]
+readout_embedding:
+  name: iota_GF4_to_F2xF2_to_R2
+  map:
+    "0": [0.0, 0.0]
+    "1": [1.0, 0.0]
+    alpha: [0.0, 1.0]
+    alpha+1: [1.0, 1.0]
+  ambient_space: R2
+  normalization: L2_distance_over_sqrt2
+null_centroid:
+  determination: analytic_uniform_GF4_measure
+  value: [0.5, 0.5]
+mols_pair:
+  family: affine_MOLS
+  formula: L_m(x, y) = m*x + y
+  canonical_pair:
+    - name: L_1
+      m: "1"
+    - name: L_alpha
+      m: alpha
+involution_semantics:
+  involutions: V4_translations_tau_a
+  formula: tau_a(x) = x + a
+  nonzero_translations:
+    - tau_1
+    - tau_alpha
+    - tau_alpha+1
+  law: tau_a(tau_a(x)) = x because a + a = 0 in characteristic 2
+negative_controls:
+  z4:
+    rejected: true
+    rationale: Z4 has a generator of order 4 and is not all-involutive V4
+  l_alpha_self_inversion:
+    rejected: true
+    rationale: L_alpha is a readout map, not the involution operator; L_alpha self-composition is not the V4 involution test
+nonclaims:
+  - Does not claim theorem-facing evidence.
+  - Does not claim Hodge, BSD, Con(PA), P vs NP, RH/GRH, A2-track, I-12, or Clay progress.
+  - Does not authorize alternative embeddings or metrics without a new boundary document.
