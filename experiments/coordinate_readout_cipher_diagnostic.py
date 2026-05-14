@@ -45,6 +45,8 @@ PINNED_READOUTS = (
 )
 EPSILON_FLOOR = 1.0e-12
 INVOLUTION_TOLERANCE = 1.0e-12
+CONFIRMATION_THRESHOLD = 5.0
+DIRECTIONAL_THRESHOLD = 1.0
 
 
 def gf4_add(x: int, y: int) -> int:
@@ -256,18 +258,72 @@ def classify_outcome(
 
     lift = corrected_selectivity / max(abs(baseline_selectivity), EPSILON_FLOOR)
     if (
-        lift >= 5.0
+        lift >= CONFIRMATION_THRESHOLD
         and corrected_balance <= baseline_balance
         and involution_error <= INVOLUTION_TOLERANCE
     ):
         return "empirical_pair_confirmed", lift
     if (
-        lift > 1.0
+        lift > DIRECTIONAL_THRESHOLD
         and corrected_balance <= baseline_balance
         and involution_error <= INVOLUTION_TOLERANCE
     ):
         return "weak_support", lift
     return "falsified_directional", lift
+
+
+def positive_outcome_metrics(
+    observed_lift: float | None,
+    corrected_balance: float,
+    baseline_balance: float | None,
+    involution_error: float,
+) -> dict[str, Any]:
+    return {
+        "selectivity_lift_vs_coordinate": observed_lift,
+        "balance_metric_corrected": corrected_balance,
+        "balance_metric_coordinate": baseline_balance,
+        "involution_error": involution_error,
+        "tolerance": INVOLUTION_TOLERANCE,
+        "confirmation_threshold": CONFIRMATION_THRESHOLD,
+    }
+
+
+def build_falsification_evidence(
+    observed_lift: float | None,
+    corrected_balance: float,
+    baseline_balance: float | None,
+    involution_error: float,
+) -> dict[str, Any]:
+    if observed_lift is None or baseline_balance is None:
+        raise ValueError("falsification evidence requires lift and baseline balance")
+
+    selectivity_passed = observed_lift > DIRECTIONAL_THRESHOLD
+    balance_passed = corrected_balance <= baseline_balance
+    involution_passed = involution_error <= INVOLUTION_TOLERANCE
+
+    triggering_conditions: list[str] = []
+    if not selectivity_passed:
+        triggering_conditions.append("selectivity_lift_vs_coordinate <= 1")
+    if not balance_passed:
+        triggering_conditions.append("balance_metric_corrected > balance_metric_coordinate")
+    if not involution_passed:
+        # This should be unreachable for a protocol-valid directional falsification.
+        triggering_conditions.append("involution_error > tolerance")
+
+    return {
+        "triggering_conditions": triggering_conditions,
+        "all_conditions_status": {
+            "selectivity_lift_vs_coordinate": observed_lift,
+            "selectivity_threshold": DIRECTIONAL_THRESHOLD,
+            "selectivity_passed": selectivity_passed,
+            "balance_metric_corrected": corrected_balance,
+            "balance_metric_coordinate": baseline_balance,
+            "balance_passed": balance_passed,
+            "involution_error": involution_error,
+            "involution_tolerance": INVOLUTION_TOLERANCE,
+            "involution_passed": involution_passed,
+        },
+    }
 
 
 def compute_receipt(
@@ -305,16 +361,25 @@ def compute_receipt(
     }
     readout_basis_hash = sha256_json(readout_basis_block)
 
-    protocol_valid = bool(
-        boundary_hash
-        and z4["z4_rejected"]
-        and baseline.get("provided", baseline_path is not None)
-        and baseline_selectivity is not None
-        and baseline_balance is not None
-        and baseline.get("provenance") is not None
-        and involution_error <= INVOLUTION_TOLERANCE
-        and readout_basis_hash
-    )
+    protocol_failure_reasons = []
+    if not boundary_hash:
+        protocol_failure_reasons.append("missing_boundary_hash")
+    if not z4["z4_rejected"]:
+        protocol_failure_reasons.append("z4_not_rejected")
+    if not baseline.get("provided", baseline_path is not None):
+        protocol_failure_reasons.append("baseline_not_provided")
+    if baseline_selectivity is None:
+        protocol_failure_reasons.append("baseline_selectivity_missing")
+    if baseline_balance is None:
+        protocol_failure_reasons.append("baseline_balance_missing")
+    if baseline.get("provenance") is None:
+        protocol_failure_reasons.append("baseline_provenance_missing")
+    if involution_error > INVOLUTION_TOLERANCE:
+        protocol_failure_reasons.append("involution_error_above_tolerance")
+    if not readout_basis_hash:
+        protocol_failure_reasons.append("readout_basis_hash_missing")
+
+    protocol_valid = not protocol_failure_reasons
 
     outcome_label, observed_lift = classify_outcome(
         protocol_valid,
@@ -338,7 +403,7 @@ def compute_receipt(
         "outcome_label": outcome_label,
     }
 
-    return {
+    receipt: dict[str, Any] = {
         "experiment_id": EXPERIMENT_ID,
         "claim_id": CLAIM_ID,
         "pattern": PATTERN,
@@ -381,6 +446,8 @@ def compute_receipt(
             "declared": True,
             "involution_error_tolerance": INVOLUTION_TOLERANCE,
             "epsilon_floor": EPSILON_FLOOR,
+            "directional_threshold": DIRECTIONAL_THRESHOLD,
+            "confirmation_threshold": CONFIRMATION_THRESHOLD,
         },
         "provenance": {
             "code_hash": code_hash,
@@ -397,6 +464,25 @@ def compute_receipt(
             "Cipher terminology is interpretive framing, not a unique interpretation of the transform.",
         ],
     }
+
+    if protocol_failure_reasons:
+        receipt["protocol_failure_reasons"] = protocol_failure_reasons
+    if outcome_label in {"weak_support", "empirical_pair_confirmed"}:
+        receipt["positive_outcome_metrics"] = positive_outcome_metrics(
+            observed_lift,
+            corrected_balance,
+            baseline_balance,
+            involution_error,
+        )
+    if outcome_label == "falsified_directional":
+        receipt["falsification_evidence"] = build_falsification_evidence(
+            observed_lift,
+            corrected_balance,
+            baseline_balance,
+            involution_error,
+        )
+
+    return receipt
 
 
 def main(argv: list[str] | None = None) -> int:
