@@ -1,0 +1,43 @@
+id: cipher-involution-experiment
+label: Part B cipher involution experiment
+title: "Part B: coordinate-basis cipher involution and selectivity measurement"
+type: empirical_measurement
+status: negative_coordinate_basis_result_confirmed__readout_basis_prediction_pending
+source_class: internal_experiment_summary
+provenance:
+  capture_mode: conversation_handoff
+  raw_artifact_available_in_repo: false
+  raw_artifact_status: pending_import_or_rerun
+  created_for_pattern: coordinate-basis-vs-readout-basis-involution
+claim_tags:
+  - E
+  - M
+  - T
+measured_result:
+  coordinate_basis:
+    involution_error: "< 1e-16 across four cipher variants"
+    selectivity_mean: "approximately 0.015"
+    interpretation: >
+      The tested coordinate-basis sign/cipher involutions preserved the involution
+      property but did not align strongly to the target readout direction.
+  readout_basis:
+    status: prediction_pending
+    predicted_selectivity_lift: "5x to 50x versus coordinate basis"
+    required_run: >
+      Rerun with centroid/readout-basis flips and proper GF(4)-based MOLS rather
+      than cyclic Z4 substitution.
+mathematical_dependency:
+  - "Klein four-group V4 = Z/2 x Z/2"
+  - "GF(4) = GF(2^2)"
+  - "Affine-plane MOLS over AG(2, GF(4))"
+  - "Cyclic Z4 Latin square rejection at even order"
+nonclaims:
+  - "Does not prove any mathematical conjecture."
+  - "Does not establish a formal reduction to Hodge, BSD, Con(PA), np-program, or Heller-Winters."
+  - "Does not yet include the corrected centroid/readout-basis run."
+  - "Does not provide a production embedding-edit method."
+review_notes:
+  - >
+    This is the canonical source record for the coordinate-basis negative result and
+    the pending readout-basis prediction. Do not cite it as a complete empirical pair
+    until the corrected run is attached.
