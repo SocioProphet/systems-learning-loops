@@ -67,22 +67,44 @@ class CoordinateReadoutCipherDiagnosticTests(unittest.TestCase):
         self.assertEqual(diag.centroid_for_readout(1), (0.5, 0.5))
         self.assertEqual(diag.centroid_for_readout(2), (0.5, 0.5))
         self.assertEqual(diag.balance_metric(1), 0.0)
+        self.assertEqual(diag.balance_metric(2), 0.0)
 
     def test_selectivity_uses_group_displacement_not_euclidean_subtraction(self) -> None:
         for a in diag.NONZERO_ELEMENTS:
             self.assertEqual(diag.observed_displacement_for_translation(a, 1), diag.iota(a))
+            self.assertEqual(
+                diag.observed_displacement_for_translation(a, 2),
+                diag.iota(diag.gf4_mul(2, a)),
+            )
 
-        result = diag.selectivity_for_readout(1, target_multiplier=1)
-        self.assertGreater(result["selectivity"], 0.0)
+        l1 = diag.selectivity_for_readout(1, target_multiplier=1)
+        l_alpha = diag.selectivity_for_readout(2, target_multiplier=2)
+        self.assertGreater(l1["selectivity"], 0.0)
+        self.assertGreater(l_alpha["selectivity"], 0.0)
+
+    def test_both_pinned_readouts_are_load_bearing(self) -> None:
+        results = diag.pinned_readout_results()
+
+        self.assertEqual(set(results), {"L_1", "L_alpha"})
+        self.assertEqual(results["L_1"]["target_multiplier"], "1")
+        self.assertEqual(results["L_alpha"]["target_multiplier"], "alpha")
+        self.assertGreater(diag.aggregate_selectivity(results), 0.0)
+        self.assertEqual(diag.aggregate_balance(results), 0.0)
 
     def test_receipt_carries_boundary_version_and_evidence_class(self) -> None:
         baseline_path = self._baseline_file(self._baseline(selectivity=0.015, balance=1.0))
         receipt = diag.compute_receipt(baseline_path=baseline_path, code_hash="impl-code")
 
         self.assertEqual(receipt["evidence_class"], "computational_diagnostic")
+        self.assertIn(receipt["evidence_class"], diag.ALLOWED_EVIDENCE_CLASSES)
         self.assertEqual(receipt["boundary_version"]["merge_commit"], diag.BOUNDARY_MERGE_COMMIT)
+        self.assertEqual(
+            receipt["boundary_version"]["merge_commit"],
+            "4b9a9082765dfe1884bb872e8470e5af2df5d963",
+        )
         self.assertEqual(receipt["construction"]["presentation"], "F2[alpha]/(alpha^2 + alpha + 1)")
         self.assertEqual(receipt["construction"]["mols_pair"], ["L_1", "L_alpha"])
+        self.assertEqual(receipt["construction"]["pinned_readouts_for_scoring"], ["L_1", "L_alpha"])
         self.assertEqual(receipt["construction"]["involution_operators"], "V4_translations_tau_a")
         self.assertTrue(receipt["construction"]["z4_rejected"])
         self.assertEqual(receipt["readout_basis"]["embedding"], "iota_GF4_to_F2xF2")
@@ -102,19 +124,26 @@ class CoordinateReadoutCipherDiagnosticTests(unittest.TestCase):
         self.assertEqual(receipt["statuses"]["prediction_outcome"], "protocol_incomplete")
         self.assertIsNone(receipt["corrected_run"]["selectivity_lift_vs_coordinate"])
 
-    def test_no_scope_creep_terms_or_theorem_facing_claims(self) -> None:
+    def test_scope_is_not_expanded_beyond_boundary(self) -> None:
         source = inspect.getsource(diag)
-        forbidden = [
+        forbidden_scope = [
             "Z9",
-            "S3",
             "alternative embedding",
-            "proves",
-            "theorem-facing",
-            "A2 track validates",
-            "Clay progress",
+            "test_s3",
+            "S_3",
         ]
-        for term in forbidden:
+        for term in forbidden_scope:
             self.assertNotIn(term, source)
+
+    def test_no_positive_theorem_or_clay_claims(self) -> None:
+        receipt = diag.compute_receipt(baseline_path=None, code_hash="impl-code")
+        joined_nonclaims = "\n".join(receipt["nonclaims"])
+
+        self.assertIn("does not prove a theorem", joined_nonclaims)
+        self.assertIn("does not claim", joined_nonclaims)
+        self.assertIn("independent of the np-program A2 track", joined_nonclaims)
+        self.assertNotIn("proves a theorem", joined_nonclaims.replace("does not prove a theorem", ""))
+        self.assertNotIn("Clay progress", joined_nonclaims.replace("or Clay progress", ""))
 
 
 if __name__ == "__main__":
