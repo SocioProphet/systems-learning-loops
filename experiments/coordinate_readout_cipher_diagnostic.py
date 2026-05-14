@@ -46,11 +46,9 @@ def gf4_mul(x: int, y: int) -> int:
     """
     x0, x1 = x & 1, (x >> 1) & 1
     y0, y1 = y & 1, (y >> 1) & 1
-    # Raw product: c0 + c1*a + c2*a^2, with a^2 = a + 1.
     c0 = x0 & y0
     c1 = (x0 & y1) ^ (x1 & y0)
     c2 = x1 & y1
-    # Add c2*(a+1).
     r0 = c0 ^ c2
     r1 = c1 ^ c2
     return r0 | (r1 << 1)
@@ -130,33 +128,42 @@ def z4_rejection() -> dict[str, Any]:
     }
 
 
-def observed_displacement_for_translation(a: int, m: int) -> tuple[float, float]:
-    """Mean readout displacement induced by tau_a under the pinned readout.
+def readout_group_displacement(a: int, m: int, x: int, y: int) -> int:
+    """GF(4) displacement of readout after applying tau_a to x.
 
-    We compare L_m(tau_a(x), y) against L_m(x, y), embedded by iota.
-    For m=1 this displacement is iota(a); for m=alpha it is iota(alpha*a).
-    The canonical diagnostic reports the better of the pinned pair only if it is
-    selected before scoring. In v0 the selected readout is L_1, and L_alpha is
-    reported for balance/composability but not used for post-hoc selection.
+    This is group displacement in GF(4), not Euclidean after-minus-before under iota.
+    The latter cancels under uniform binary coordinates and is not the pinned diagnostic.
     """
-    displacements = []
-    for x, y in all_pairs():
-        before = iota(l_m(m, x, y))
-        after = iota(l_m(m, tau(a, x), y))
-        displacements.append((after[0] - before[0], after[1] - before[1]))
+    before = l_m(m, x, y)
+    after = l_m(m, tau(a, x), y)
+    return gf4_add(after, before)
+
+
+def observed_displacement_for_translation(a: int, m: int) -> tuple[float, float]:
+    """Mean embedded GF(4) readout displacement induced by tau_a."""
+    displacements = [iota(readout_group_displacement(a, m, x, y)) for x, y in all_pairs()]
     return mean_vector(displacements)
 
 
-def selectivity_for_readout(m: int) -> dict[str, Any]:
+def selectivity_for_readout(m: int, target_multiplier: int) -> dict[str, Any]:
+    """Compute v0 selectivity for a predeclared readout.
+
+    `target_multiplier=1` scores L_1 against iota(a). `L_alpha` is reported as
+    a diagnostic only and uses target_multiplier=alpha so it is not silently
+    compared against the wrong label.
+    """
     margins = []
     per_mask: dict[str, Any] = {}
     for a in NONZERO_ELEMENTS:
         delta = observed_displacement_for_translation(a, m)
-        target = iota(a)
-        correct_distance = normalized_distance(delta, target)
+        intended = gf4_mul(target_multiplier, a)
+        target = iota(intended)
         incorrect_distance = min(
-            normalized_distance(delta, iota(b)) for b in NONZERO_ELEMENTS if b != a
+            normalized_distance(delta, iota(gf4_mul(target_multiplier, b)))
+            for b in NONZERO_ELEMENTS
+            if b != a
         )
+        correct_distance = normalized_distance(delta, target)
         margin = incorrect_distance - correct_distance
         margins.append(margin)
         per_mask[ELEMENT_NAMES[a]] = {
@@ -203,7 +210,9 @@ def load_baseline(path: Path | None) -> dict[str, Any]:
             "coordinate_basis_balance_metric": None,
             "provenance": None,
         }
-    return json.loads(path.read_text(encoding="utf-8"))
+    loaded = json.loads(path.read_text(encoding="utf-8"))
+    loaded.setdefault("provided", True)
+    return loaded
 
 
 def classify_outcome(
@@ -247,8 +256,8 @@ def compute_receipt(
     baseline_balance = baseline.get("coordinate_basis_balance_metric")
 
     selected_readout = 1  # L_1 is the predeclared v0 readout for scoring.
-    corrected_selectivity = selectivity_for_readout(selected_readout)
-    l_alpha_diagnostic = selectivity_for_readout(2)
+    corrected_selectivity = selectivity_for_readout(selected_readout, target_multiplier=1)
+    l_alpha_diagnostic = selectivity_for_readout(2, target_multiplier=2)
     corrected_balance = balance_metric(selected_readout)
     involution_error = v4_involution_error()
     z4 = z4_rejection()
