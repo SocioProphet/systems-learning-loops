@@ -1,0 +1,23 @@
+{
+  "evidence_class": "computational_diagnostic",
+  "statuses": {
+    "protocol_valid": true,
+    "prediction_outcome": "falsified_directional"
+  },
+  "falsification_evidence": {
+    "triggering_conditions": [
+      "selectivity_lift_vs_coordinate <= 1"
+    ],
+    "all_conditions_status": {
+      "selectivity_lift_vs_coordinate": 0.7,
+      "selectivity_threshold": 1.0,
+      "selectivity_passed": false,
+      "balance_metric_corrected": 0.42,
+      "balance_metric_coordinate": 0.45,
+      "balance_passed": true,
+      "involution_error": 0.0,
+      "involution_tolerance": 0.000000000001,
+      "involution_passed": true
+    }
+  }
+}
