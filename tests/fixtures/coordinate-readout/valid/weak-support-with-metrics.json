@@ -1,0 +1,15 @@
+{
+  "evidence_class": "computational_diagnostic",
+  "statuses": {
+    "protocol_valid": true,
+    "prediction_outcome": "weak_support"
+  },
+  "positive_outcome_metrics": {
+    "selectivity_lift_vs_coordinate": 2.5,
+    "balance_metric_corrected": 0.3,
+    "balance_metric_coordinate": 0.4,
+    "involution_error": 0.0,
+    "tolerance": 0.000000000001,
+    "confirmation_threshold": 5.0
+  }
+}
