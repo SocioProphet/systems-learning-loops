@@ -1,0 +1,157 @@
+convention_id: coordinate-basis-baseline-v0
+status: locked_for_coordinate_readout_baseline_replay_v0
+artifact_class: computational_diagnostic_baseline_convention
+applies_to:
+  - coordinate-readout-cipher-v0-baseline
+  - COORD_READOUT_INVOLUTION_001
+boundary_source:
+  path: kb/patterns/coordinate-readout-cipher-experiment-claim-boundary.md
+  merge_commit: 4b9a9082765dfe1884bb872e8470e5af2df5d963
+corrected_convention_ref: kb/conventions/GF4-V4-iota-v0.convention.yaml
+purpose: >
+  Define the coordinate-basis baseline independently of the corrected readout
+  diagnostic so replay cannot collapse the baseline into whatever the corrected
+  diagnostic emits.
+
+evidence_class: computational_diagnostic_baseline
+
+field:
+  name: GF(4)
+  presentation: F2[alpha]/(alpha^2 + alpha + 1)
+  relation: alpha^2 = alpha + 1
+  characteristic: 2
+  element_order:
+    - "0"
+    - "1"
+    - alpha
+    - alpha+1
+
+coordinate_basis:
+  name: coordinate_position_baseline_v0
+  definition: >
+    The coordinate-basis baseline uses the same GF(4) field presentation and
+    iota embedding as the corrected diagnostic, but it treats coordinates as
+    position labels and does not use the corrected readout-basis interpretation
+    to select or tune masks after observation.
+  asymmetry_against_corrected_readout: >
+    The baseline is the coordinate-position reference artifact. The corrected
+    diagnostic is the GF(4)/V4 readout diagnostic. They must remain separate
+    artifacts even when they share the same field presentation and iota embedding.
+  prohibited_collapse: >
+    The baseline must not be produced by calling the corrected comparison receipt
+    with missing baseline data and relabeling the result as coordinate-basis.
+
+readout_embedding:
+  name: iota_GF4_to_F2xF2_to_R2
+  map:
+    "0": [0.0, 0.0]
+    "1": [1.0, 0.0]
+    alpha: [0.0, 1.0]
+    alpha+1: [1.0, 1.0]
+  ambient_space: R2
+  normalization: L2_distance_over_sqrt2
+
+input_data:
+  type: deterministic_synthetic_fixture
+  fixture_id: coordinate-basis-baseline-synthetic-v0
+  rationale: >
+    The first canonical baseline should not depend on an external dataset whose
+    retrieval and hidden conventions could drift. A deterministic synthetic
+    fixture makes the first baseline replay reproducible by construction.
+  fixture_domain: GF(4)^2
+  enumeration: lexicographic_over_element_order
+  sample_points: all_16_pairs
+  randomness: none
+  seed: null
+  data_hash_rule: >
+    Hash the serialized fixture declaration and deterministic generated sample,
+    or a canonical JSON payload containing element_order, fixture_domain,
+    enumeration, and sample_points.
+
+involution_semantics:
+  involutions: V4_translations_tau_a
+  formula: tau_a(x) = x + a
+  nonzero_translations:
+    - tau_1
+    - tau_alpha
+    - tau_alpha+1
+  law: tau_a(tau_a(x)) = x because a + a = 0 in characteristic 2
+  analytic_involution_error:
+    value: 0.0
+    determination: analytic
+
+mols_pair:
+  family: affine_MOLS
+  formula: L_m(x, y) = m*x + y
+  canonical_pair:
+    - name: L_1
+      m: "1"
+    - name: L_alpha
+      m: alpha
+  l_alpha_not_involution:
+    value: true
+    rationale: L_alpha is a readout map in the MOLS pair, not the V4 involution operator.
+
+null_centroid:
+  determination: analytic_uniform_GF4_measure
+  value: [0.5, 0.5]
+
+selectivity_metric:
+  name: coordinate_basis_v0_margin
+  must_match_corrected_v0_units: true
+  formula: >
+    Use the same intended-vs-incorrect V4 translation margin and the same
+    L2_distance_over_sqrt2 normalization as the corrected diagnostic so the
+    lift ratio is meaningful.
+  corrected_metric_ref: kb/patterns/coordinate-readout-cipher-experiment-claim-boundary.md#selectivity-metric-v0
+  allowed_output_units: normalized_margin_in_iota_R2
+  prohibited_variants:
+    - unnormalized_margin
+    - fisher_ratio_as_gating_metric
+    - KL_divergence_as_gating_metric
+    - posthoc_metric_selection
+
+balance_metric:
+  name: coordinate_basis_v0_balance
+  null_centroid: [0.5, 0.5]
+  formula: L2_distance(sample_centroid, null_centroid) / sqrt(2)
+  must_match_corrected_v0_units: true
+
+baseline_receipt_requirements:
+  required_fields:
+    - artifact_class
+    - evidence_class
+    - baseline_id
+    - convention_id
+    - diagnostic_ref
+    - coordinate_basis_selectivity
+    - coordinate_basis_balance_metric
+    - coordinate_basis_involution_error
+    - input_hashes.code_hash
+    - input_hashes.data_hash
+    - input_hashes.convention_hash
+    - output_hashes.baseline_receipt_hash
+  schema_note: >
+    Baseline receipts are not comparison receipts. They do not carry prediction
+    outcome tiers but must carry enough provenance to allow a later comparison
+    receipt to compute protocol_valid and prediction_outcome.
+
+versioning_policy:
+  current_version: v0
+  bump_to_v1_when:
+    - coordinate_basis_definition_changes
+    - selectivity_metric_changes
+    - input_data_fixture_changes
+    - readout_embedding_changes
+    - V4_involution_semantics_changes
+  no_bump_required_for:
+    - prose_clarification_that_preserves_all_load_bearing_semantics
+    - formatting_only_changes
+
+nonclaims:
+  - This baseline is not the corrected readout result.
+  - This baseline is not a prediction outcome.
+  - This baseline is not a null hypothesis or randomized null model.
+  - This baseline is not theorem-facing evidence.
+  - This baseline does not claim Hodge, BSD, Con(PA), P vs NP, RH/GRH, A2-track, I-12, or Clay progress.
+  - This baseline does not authorize alternative embeddings, groups, or selectivity metrics without a new boundary or convention document.
