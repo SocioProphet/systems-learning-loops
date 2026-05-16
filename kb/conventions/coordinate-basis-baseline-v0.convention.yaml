@@ -14,6 +14,18 @@ purpose: >
   diagnostic emits.
 
 evidence_class: computational_diagnostic_baseline
+hash_algorithm: sha256
+
+data_layers:
+  analytic:
+    - coordinate_basis_involution_error
+    - null_centroid
+  empirical_replay:
+    - coordinate_basis_selectivity
+    - coordinate_basis_balance_metric
+  comparison_only:
+    - selectivity_lift_vs_coordinate
+    - prediction_outcome
 
 field:
   name: GF(4)
@@ -25,6 +37,13 @@ field:
     - "1"
     - alpha
     - alpha+1
+  multiplication_table:
+    rows_and_columns: ["0", "1", alpha, alpha+1]
+    table:
+      - ["0", "0", "0", "0"]
+      - ["0", "1", alpha, alpha+1]
+      - ["0", alpha, alpha+1, "1"]
+      - ["0", alpha+1, "1", alpha]
 
 coordinate_basis:
   name: coordinate_position_baseline_v0
@@ -64,9 +83,8 @@ input_data:
   randomness: none
   seed: null
   data_hash_rule: >
-    Hash the serialized fixture declaration and deterministic generated sample,
-    or a canonical JSON payload containing element_order, fixture_domain,
-    enumeration, and sample_points.
+    Hash using sha256 over a canonical JSON payload containing element_order,
+    fixture_domain, enumeration, sample_points, randomness, and seed.
 
 involution_semantics:
   involutions: V4_translations_tau_a
@@ -79,6 +97,7 @@ involution_semantics:
   analytic_involution_error:
     value: 0.0
     determination: analytic
+    value_provenance: analytic
 
 mols_pair:
   family: affine_MOLS
@@ -95,16 +114,27 @@ mols_pair:
 null_centroid:
   determination: analytic_uniform_GF4_measure
   value: [0.5, 0.5]
+  value_provenance: analytic
 
 selectivity_metric:
   name: coordinate_basis_v0_margin
   must_match_corrected_v0_units: true
   formula: >
-    Use the same intended-vs-incorrect V4 translation margin and the same
-    L2_distance_over_sqrt2 normalization as the corrected diagnostic so the
-    lift ratio is meaningful.
+    For each pinned readout L_m and nonzero translation a, compute coordinate
+    displacement by Euclidean coordinate-position difference after iota:
+    delta_a = mean_{(x,y) in GF(4)^2}(iota(L_m(tau_a(x),y)) - iota(L_m(x,y))).
+    Let t_a = iota(target_multiplier_m * a). Then compute
+    correct_distance_a = ||delta_a - t_a||_2 / sqrt(2),
+    incorrect_distance_a = min_{b != a, b != 0} ||delta_a - iota(target_multiplier_m * b)||_2 / sqrt(2),
+    selectivity_margin_a = incorrect_distance_a - correct_distance_a.
+    The readout selectivity is the mean margin over nonzero a. The baseline
+    selectivity is the mean readout selectivity over L_1 and L_alpha.
+  target_multipliers:
+    L_1: "1"
+    L_alpha: alpha
   corrected_metric_ref: kb/patterns/coordinate-readout-cipher-experiment-claim-boundary.md#selectivity-metric-v0
   allowed_output_units: normalized_margin_in_iota_R2
+  value_provenance: replayed
   prohibited_variants:
     - unnormalized_margin
     - fisher_ratio_as_gating_metric
@@ -114,8 +144,12 @@ selectivity_metric:
 balance_metric:
   name: coordinate_basis_v0_balance
   null_centroid: [0.5, 0.5]
-  formula: L2_distance(sample_centroid, null_centroid) / sqrt(2)
+  formula: >
+    For each pinned readout L_m, compute sample_centroid = mean_{(x,y) in GF(4)^2} iota(L_m(x,y)),
+    then balance_m = ||sample_centroid - [0.5,0.5]||_2 / sqrt(2). The baseline
+    balance metric is the mean of balance_m over L_1 and L_alpha.
   must_match_corrected_v0_units: true
+  value_provenance: replayed
 
 baseline_receipt_requirements:
   required_fields:
@@ -123,10 +157,14 @@ baseline_receipt_requirements:
     - evidence_class
     - baseline_id
     - convention_id
+    - hash_algorithm
     - diagnostic_ref
     - coordinate_basis_selectivity
     - coordinate_basis_balance_metric
     - coordinate_basis_involution_error
+    - value_provenance.coordinate_basis_selectivity
+    - value_provenance.coordinate_basis_balance_metric
+    - value_provenance.coordinate_basis_involution_error
     - input_hashes.code_hash
     - input_hashes.data_hash
     - input_hashes.convention_hash
