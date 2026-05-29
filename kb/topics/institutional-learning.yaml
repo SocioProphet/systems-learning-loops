@@ -1,0 +1,228 @@
+version: 0.1.0
+status: draft
+authority_plane: SocioProphet/systems-learning-loops
+canon_ref: docs/institutional-learning-canon-v0.md
+purpose: >-
+  Initial topic taxonomy for institutional learning loops. This file keeps the
+  canon navigable before schemas, ontology terms, and validators are introduced.
+
+principles:
+  - primary_first
+  - quote_bounded
+  - claims_over_vibes
+  - explicit_deduplication
+  - commons_semantics
+  - doctrine_requires_receipts
+
+canonical_loop:
+  - observe
+  - source
+  - quote_or_extract
+  - claim
+  - pattern
+  - countermeasure
+  - doctrine
+  - test_or_gate
+  - receipt
+  - teach
+  - reobserve
+
+canon_objects:
+  learning_source:
+    description: Primary or secondary source with provenance, evidence weight, aliases, source type, date, and retrieval/citation metadata.
+    expected_home: kb/sources/
+  bounded_extract:
+    description: Short compliant excerpt, observation, log fragment, artifact selector, or event fragment used as evidence.
+    expected_home: kb/quotes/
+    future_home_candidate: kb/extracts/
+  learning_claim:
+    description: Bounded assertion linked to supporting, opposing, or qualifying sources and extracts.
+    expected_home: kb/claims/
+  learning_pattern:
+    description: Recurring socio-technical structure with conditions, symptoms, forces, failure modes, countermeasures, and limits.
+    expected_home: kb/patterns/
+  countermeasure:
+    description: Proposed or adopted operational response to a learning pattern.
+    expected_home: kb/patterns/
+  doctrine_promotion:
+    description: Record that a countermeasure was promoted into an authority surface.
+    future_home_candidate: kb/promotions/
+  learning_receipt:
+    description: Record connecting evidence, claim, pattern, countermeasure, doctrine, test/gate, and adoption state.
+    future_home_candidate: kb/receipts/
+  teaching_object:
+    description: Human- or agent-facing explanation derived from a pattern and its doctrine.
+    future_home_candidate: kb/teaching/
+
+topics:
+  - id: il.source-discipline
+    label: Source discipline
+    description: How evidence is admitted, weighted, deduplicated, quoted, extracted, and tied to claims.
+    loop_stages:
+      - source
+      - quote_or_extract
+      - claim
+    consumer_repos:
+      - SocioProphet/ontogenesis
+      - SocioProphet/alexandrian-academy
+      - SocioProphet/model-governance-ledger
+    example_questions:
+      - What source backs this lesson?
+      - Is the extract bounded and compliant?
+      - Is the claim smaller than the conclusion?
+
+  - id: il.pattern-library
+    label: Pattern library
+    description: Recurring socio-technical structures such as scaling shocks, governance breakdown, bikeshedding, protocol drift, and moderation failure.
+    loop_stages:
+      - claim
+      - pattern
+      - countermeasure
+    consumer_repos:
+      - SocioProphet/systems-learning-loops
+      - SocioProphet/SCOPE-D
+      - SocioProphet/delivery-excellence
+    example_questions:
+      - What conditions make the pattern appear?
+      - What symptoms distinguish it from neighboring patterns?
+      - What countermeasures have evidence behind them?
+
+  - id: il.doctrine-promotion
+    label: Doctrine promotion
+    description: How validated countermeasures become repo-local rules, ontology terms, policy objects, tests, gates, workflows, or playbooks.
+    loop_stages:
+      - countermeasure
+      - doctrine
+      - test_or_gate
+      - receipt
+    consumer_repos:
+      - SocioProphet/ontogenesis
+      - SocioProphet/agentplane
+      - SocioProphet/prophet-platform
+      - SocioProphet/sociosphere
+    example_questions:
+      - What authority surface owns the promoted doctrine?
+      - What gate or review question checks it?
+      - What receipt proves the doctrine was adopted?
+
+  - id: il.delivery-learning
+    label: Delivery learning
+    description: Postmortem-to-process learning for backlog hygiene, acceptance criteria, rollout discipline, PR review, CI evidence, and operational execution.
+    loop_stages:
+      - observe
+      - pattern
+      - countermeasure
+      - doctrine
+      - test_or_gate
+      - receipt
+    consumer_repos:
+      - SocioProphet/delivery-excellence
+      - SocioProphet/sociosphere
+      - SocioProphet/prophet-platform
+    example_questions:
+      - What failure recurred across delivery work?
+      - What acceptance criterion would have caught it?
+      - What review or CI evidence prevents regression?
+
+  - id: il.agent-behavior-learning
+    label: Agent behavior learning
+    description: Lessons that become agent boot constraints, action-admission checks, runtime receipts, subagent delegation rules, or operator readouts.
+    loop_stages:
+      - observe
+      - countermeasure
+      - doctrine
+      - test_or_gate
+      - receipt
+      - reobserve
+    consumer_repos:
+      - SocioProphet/agentplane
+      - SocioProphet/agent-registry
+      - SocioProphet/model-governance-ledger
+    example_questions:
+      - What agent behavior failed or drifted?
+      - What action gate or boot contract should change?
+      - What runtime receipt proves enforcement?
+
+  - id: il.workroom-memory-learning
+    label: Workroom and memory learning
+    description: Learning loops governing workroom memory, topic packs, recoverability, non-linkability, teaching notes, and cross-session continuity.
+    loop_stages:
+      - observe
+      - claim
+      - pattern
+      - doctrine
+      - receipt
+      - teach
+    consumer_repos:
+      - SocioProphet/prophet-platform
+      - SocioProphet/sociosphere
+      - SocioProphet/ontogenesis
+    example_questions:
+      - What should be remembered, forgotten, or kept ephemeral?
+      - What topic pack or workroom rule should change?
+      - Does the memory behavior respect DoNotLearn and DoNotLink?
+
+  - id: il.world-learning
+    label: World learning
+    description: Conversion of world evidence, geospatial/temporal observations, environmental signals, and field feedback into claims, patterns, doctrine, and reobservation plans.
+    loop_stages:
+      - observe
+      - source
+      - claim
+      - pattern
+      - reobserve
+    consumer_repos:
+      - SocioProphet/gaia-world-model
+      - SocioProphet/ontogenesis
+      - SocioProphet/alexandrian-academy
+    example_questions:
+      - What world evidence supports the claim?
+      - What temporal or spatial scope bounds the lesson?
+      - What future observation checks drift?
+
+  - id: il.defensive-learning
+    label: Defensive and adversarial learning
+    description: Lessons from threat models, purple-team exercises, detection gaps, MITRE/ATLAS limitations, fraud patterns, abuse scenarios, and empirical hardening cycles.
+    loop_stages:
+      - observe
+      - pattern
+      - countermeasure
+      - test_or_gate
+      - receipt
+      - reobserve
+    consumer_repos:
+      - SocioProphet/SCOPE-D
+      - SocioProphet/guardrail-fabric
+      - SocioProphet/ontogenesis
+      - SocioProphet/model-governance-ledger
+    example_questions:
+      - What external threat model anchors the lesson?
+      - What detection or hardening test embodies the countermeasure?
+      - What empirical signal shows the system improved?
+
+  - id: il.teaching-and-canonization
+    label: Teaching and canonization
+    description: Promotion of validated patterns into lessons, workroom cards, Academy materials, drills, checklists, and agent-facing teaching objects.
+    loop_stages:
+      - doctrine
+      - receipt
+      - teach
+      - reobserve
+    consumer_repos:
+      - SocioProphet/alexandrian-academy
+      - SocioProphet/prophet-platform
+      - SocioProphet/agentplane
+    example_questions:
+      - Who needs to learn this: human, agent, or both?
+      - What is the smallest teaching object that preserves the doctrine?
+      - How will later failures update the lesson?
+
+follow_on:
+  next_files:
+    - kb/patterns/pattern-template.md
+    - kb/patterns/institutional-amnesia.md
+    - kb/receipts/README.md
+  defer_until_patterns_exist:
+    - schemas/institutional-learning-topic.schema.json
+    - ontology/institutional-learning.ttl
+    - scripts/validate_institutional_learning_topics.py
