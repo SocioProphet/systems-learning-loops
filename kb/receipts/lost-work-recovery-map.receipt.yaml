@@ -1,0 +1,68 @@
+receipt_id: il.receipt.lost-work-recovery-map
+status: provisional
+date: 2026-05-30
+lesson_summary: >-
+  High-value prior work can be operationally lost even when it exists in chat
+  memory, planning notes, issues, or partial repo artifacts. Recovery requires
+  explicit disposition: owner repo, authority artifact, archive-only status,
+  frozen return condition, or intentional non-pursuit rationale.
+
+source_refs:
+  - SocioProphet/sociosphere#408
+  - SocioProphet/sociosphere:docs/strategy/lost-work-recovery-map.md
+  - SocioProphet/systems-learning-loops:docs/institutional-learning-canon-v0.md
+
+extract_refs:
+  - SocioProphet/sociosphere:docs/strategy/lost-work-recovery-map.md#do-not-lose-again-rule
+  - SocioProphet/systems-learning-loops:kb/patterns/institutional-amnesia.md#countermeasures
+
+claim_refs:
+  - il.claim.amnesia.exists-without-absence
+  - il.claim.recovery-needs-disposition
+  - il.claim.lesson-needs-loop
+
+pattern_refs:
+  - il.pattern.institutional-amnesia
+
+countermeasure_refs:
+  - il.countermeasure.recovery-map
+  - il.countermeasure.do-not-lose-again
+  - il.countermeasure.patternize-recovery
+  - il.countermeasure.receipt-backed-promotion
+
+authority_surface:
+  repo: SocioProphet/sociosphere
+  artifact: docs/strategy/lost-work-recovery-map.md
+  tracking_issue: SocioProphet/sociosphere#408
+  gate: >-
+    Each recovered thread must resolve into an owner repo, archive-only status,
+    frozen return condition, or intentional non-pursuit rationale.
+
+gate_refs:
+  - SocioProphet/sociosphere:docs/strategy/lost-work-recovery-map.md
+  - SocioProphet/systems-learning-loops:kb/patterns/institutional-amnesia.md#test--gate
+
+teaching_refs:
+  - SocioProphet/systems-learning-loops:kb/patterns/institutional-amnesia.md#teaching-object
+
+reobservation_plan:
+  confirming_signal: >-
+    Recovered concepts receive owner repos, durable artifacts, and downstream
+    references to those authority artifacts instead of repeated reliance on
+    chat memory.
+  weakening_signal: >-
+    Recovery artifacts are created but not used; future work again asks what
+    prior work existed because estate inventory and receipt surfaces remain
+    incomplete.
+  supersession_trigger: >-
+    Sociosphere or workspace-inventory gains an estate-ledger mechanism that
+    mechanically tracks recovered-thread ownership, disposition, and adoption.
+  review_cadence: >-
+    Review after each major lost-work recovery tranche and again when
+    workspace-inventory or Sociosphere estate-ledger coverage lands.
+
+claim_boundary: >-
+  This receipt does not assert that every dormant idea should be revived. It
+  records that strategically valuable recovered work needs explicit disposition
+  and a durable authority surface. Archive-only, intentional closure, and frozen
+  return-condition statuses remain valid outcomes.
