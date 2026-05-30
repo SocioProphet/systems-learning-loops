@@ -1,0 +1,71 @@
+receipt_id: il.receipt.prophet-workspace-workroom-substrate
+status: provisional
+date: 2026-05-30
+lesson_summary: >-
+  Professional Workrooms are the user-facing product surface for recovered
+  privacy, memory, topic, audio, agent, receipt, estate, and learning surfaces.
+  The workroom contract should carry references to those authorities without
+  collapsing their ownership into prophet-workspace.
+
+source_refs:
+  - SocioProphet/prophet-workspace:docs/professional-workrooms.md
+  - SocioProphet/prophet-workspace:docs/workroom-substrate-alignment-v0.md
+  - SocioProphet/prophet-workspace:contracts/workspace/professional-workroom.schema.json
+  - SocioProphet/prophet-workspace:contracts/workspace/professional-workroom.v0.1.example.json
+  - SocioProphet/prophet-workspace:tools/validate_professional_workrooms.py
+  - SocioProphet/workspace-inventory:inventory/estate-overlays/prophet-workspace-workroom-substrate.yaml
+
+extract_refs:
+  - SocioProphet/prophet-workspace:docs/workroom-substrate-alignment-v0.md#workroom-substrate-stack
+  - SocioProphet/prophet-workspace:docs/workroom-substrate-alignment-v0.md#memory-and-privacy-constraints
+  - SocioProphet/prophet-workspace:docs/workroom-substrate-alignment-v0.md#acceptance-criteria-for-next-implementation-tranche
+
+claim_refs:
+  - il.claim.workroom.product-surface-not-authority-collapse
+  - il.claim.workroom.recovered-substrate-refs-should-be-explicit
+  - il.claim.workroom.runtime-remains-platform-owned
+
+pattern_refs:
+  - il.pattern.institutional-amnesia
+
+countermeasure_refs:
+  - il.countermeasure.receipt-backed-promotion
+  - il.countermeasure.do-not-lose-again
+
+authority_surface:
+  repo: SocioProphet/prophet-workspace
+  artifact: docs/workroom-substrate-alignment-v0.md
+  supporting_artifacts:
+    - contracts/workspace/professional-workroom.schema.json
+    - contracts/workspace/professional-workroom.v0.1.example.json
+    - tools/validate_professional_workrooms.py
+    - .github/workflows/professional-workrooms.yml
+    - README.md
+  gate: python3 tools/validate_professional_workrooms.py validates recovered substrate refs in the canonical example
+
+gate_refs:
+  - SocioProphet/prophet-workspace:tools/validate_professional_workrooms.py
+  - SocioProphet/prophet-workspace:.github/workflows/professional-workrooms.yml
+
+teaching_refs:
+  - SocioProphet/systems-learning-loops:kb/patterns/institutional-amnesia.md#teaching-object
+
+reobservation_plan:
+  confirming_signal: >-
+    Future Professional Workroom implementation keeps topic packs, memory scopes,
+    privacy decisions, audio review, learning receipts, semantic receipts, and
+    adoption events as explicit references to authority surfaces.
+  weakening_signal: >-
+    Workroom runtime or UI work embeds memory, policy, topic, audio, or agent
+    semantics directly without authority refs, receipts, or validation.
+  supersession_trigger: >-
+    A later workroom runtime contract or platform integration spec supersedes
+    this alignment note and migrates the schema/example/validator surface.
+  review_cadence: >-
+    Review before runtime implementation deepens in prophet-platform or before
+    workroom UI/adoption telemetry claims demo readiness.
+
+claim_boundary: >-
+  This receipt records product-contract alignment. It does not claim runtime
+  readiness, UI completion, platform deployment, policy enforcement, model
+  governance implementation, or full downstream integration.
