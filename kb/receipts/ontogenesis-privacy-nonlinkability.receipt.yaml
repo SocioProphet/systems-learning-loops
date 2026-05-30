@@ -1,0 +1,67 @@
+receipt_id: il.receipt.ontogenesis-privacy-nonlinkability
+status: provisional
+date: 2026-05-30
+lesson_summary: >-
+  Privacy recovery requires separating representation formation from relation
+  formation. DoNotLearn governs whether protected signals may become reusable
+  representations; DoNotLink governs whether protected scopes may be joined,
+  bridged, inferred, exposed, or operationalized together.
+
+source_refs:
+  - SocioProphet/sociosphere:docs/strategy/lost-work-recovery-map.md
+  - SocioProphet/ontogenesis:docs/specs/privacy-nonlinkability-doctrine-v0.md
+  - SocioProphet/ontogenesis:Platform/GovernedIntelligence/privacy-nonlinkability.ttl
+  - SocioProphet/ontogenesis:catalog/governed_intelligence_registry.ttl
+
+extract_refs:
+  - SocioProphet/ontogenesis:docs/specs/privacy-nonlinkability-doctrine-v0.md#donotlearn
+  - SocioProphet/ontogenesis:docs/specs/privacy-nonlinkability-doctrine-v0.md#donotlink
+
+claim_refs:
+  - il.claim.privacy.nonlearning-and-nonlinkability-are-distinct
+  - il.claim.privacy.evidence-admission-is-not-learning-permission
+  - il.claim.privacy.search-result-is-not-link-permission
+
+pattern_refs:
+  - il.pattern.institutional-amnesia
+
+countermeasure_refs:
+  - il.countermeasure.recovery-map
+  - il.countermeasure.receipt-backed-promotion
+
+authority_surface:
+  repo: SocioProphet/ontogenesis
+  artifact: docs/specs/privacy-nonlinkability-doctrine-v0.md
+  supporting_artifacts:
+    - Platform/GovernedIntelligence/privacy-nonlinkability.ttl
+    - contexts/governed-intelligence.context.jsonld
+    - shapes/privacy_nonlinkability.shacl.ttl
+    - examples/privacy-nonlinkability/
+    - scripts/validate_privacy_nonlinkability_examples.py
+  gate: make validate includes validate-privacy-nonlinkability
+
+gate_refs:
+  - SocioProphet/ontogenesis:scripts/validate_privacy_nonlinkability_examples.py
+  - SocioProphet/ontogenesis:Makefile
+
+teaching_refs:
+  - SocioProphet/systems-learning-loops:kb/patterns/institutional-amnesia.md#teaching-object
+
+reobservation_plan:
+  confirming_signal: >-
+    Downstream policy/runtime repos consume the doctrine through explicit
+    privacy decisions, receipts, validators, or runtime gates.
+  weakening_signal: >-
+    Memory, search, workroom, graph, or topic-pack systems create durable
+    representations or cross-scope links without privacy admission receipts.
+  supersession_trigger: >-
+    A later Ontogenesis privacy ontology version supersedes the v0 doctrine and
+    migrates downstream examples and validators.
+  review_cadence: >-
+    Review when policy-fabric, guardrail-fabric, prophet-platform,
+    model-governance-ledger, or agentplane begin runtime enforcement.
+
+claim_boundary: >-
+  This receipt records recovery and initial validation-backed doctrine. It does
+  not claim legal privacy compliance, complete enforcement, differential
+  privacy, anonymization guarantees, or downstream runtime adoption.
