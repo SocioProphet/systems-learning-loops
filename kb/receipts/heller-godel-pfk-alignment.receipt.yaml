@@ -1,0 +1,68 @@
+receipt_id: il.receipt.heller-godel-pfk-alignment
+status: provisional
+date: 2026-05-30
+lesson_summary: >-
+  The proof-fabric kernel is already active inside Heller-Godel and should be
+  treated as Clay/math research infrastructure, not as a standard SocioProphet
+  product substrate or a missing standalone repo.
+
+source_refs:
+  - SocioProphet/sociosphere:docs/strategy/lost-work-recovery-map.md
+  - SocioProphet/sociosphere#416
+  - SocioProphet/Heller-Godel:docs/framework-core/proof-fabric-kernel-extraction-control.md
+  - SocioProphet/Heller-Godel:proof_fabric_kernel/README.md
+  - SocioProphet/Heller-Godel:proof_fabric_kernel/docs/ClayProgram_PFK_ConsumerContract_v0.md
+
+extract_refs:
+  - SocioProphet/Heller-Godel:docs/framework-core/proof-fabric-kernel-extraction-control.md#corrected-location-decision
+  - SocioProphet/Heller-Godel:proof_fabric_kernel/docs/ClayProgram_PFK_ConsumerContract_v0.md#authority-decision
+
+claim_refs:
+  - il.claim.pfk.lives-in-heller-godel
+  - il.claim.pfk.schema-validity-is-not-content-validity
+  - il.claim.pfk.clay-research-infrastructure-not-product-substrate
+
+pattern_refs:
+  - il.pattern.institutional-amnesia
+
+countermeasure_refs:
+  - il.countermeasure.recovery-map
+  - il.countermeasure.receipt-backed-promotion
+
+authority_surface:
+  repo: SocioProphet/Heller-Godel
+  artifact: proof_fabric_kernel/docs/ClayProgram_PFK_ConsumerContract_v0.md
+  supporting_artifacts:
+    - docs/framework-core/proof-fabric-kernel-extraction-control.md
+    - proof_fabric_kernel/README.md
+    - proof_fabric_kernel/docs/SchemaCatalog_v1.md
+    - proof_fabric_kernel/docs/anti-seed-pfk.md
+    - tests/test_proof_fabric_kernel.py
+  gate: PFK consumers must pin Heller-Godel commit and validate native artifacts before claiming compatibility.
+
+gate_refs:
+  - SocioProphet/Heller-Godel:tests/test_proof_fabric_kernel.py
+  - SocioProphet/Heller-Godel:proof_fabric_kernel/docs/SchemaCatalog_v1.md
+  - SocioProphet/Heller-Godel:proof_fabric_kernel/docs/anti-seed-pfk.md
+
+teaching_refs:
+  - SocioProphet/systems-learning-loops:kb/patterns/institutional-amnesia.md#teaching-object
+
+reobservation_plan:
+  confirming_signal: >-
+    Clay-program repos declare pinned Heller-Godel PFK dependencies and emit
+    native Event-IR / ProofArtifact-compatible receipts where appropriate.
+  weakening_signal: >-
+    Clay repos reference PFK vaguely, consume floating main, or treat schema
+    validation as mathematical evidence.
+  supersession_trigger: >-
+    A formally approved extraction creates a separate PFK authority repo and
+    migrates dependencies without weakening anti-seed boundaries.
+  review_cadence: >-
+    Review when Heller-Winters, Yang-Mills, BSD, Hodge, HPHd/Zeta, NP, or
+    Heller-Dirac claim PFK compatibility.
+
+claim_boundary: >-
+  This receipt records operational alignment only. It does not claim theorem
+  progress, proof correctness, Clay proximity, or general SocioProphet platform
+  adoption.
