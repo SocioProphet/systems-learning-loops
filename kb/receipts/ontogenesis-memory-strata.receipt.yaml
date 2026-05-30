@@ -1,0 +1,68 @@
+receipt_id: il.receipt.ontogenesis-memory-strata
+status: provisional
+date: 2026-05-30
+lesson_summary: >-
+  Memory must be treated as governed representation strata rather than one
+  undifferentiated substrate. Raw signal, anchors, evidence, claims, graphs,
+  statistical features, vector candidates, learned latent state, policy,
+  actions, receipts, and teaching objects have different authority, lifecycle,
+  privacy, and validation semantics.
+
+source_refs:
+  - SocioProphet/sociosphere:docs/strategy/lost-work-recovery-map.md
+  - SocioProphet/ontogenesis:docs/specs/governed-memory-representation-strata-v0.md
+  - SocioProphet/ontogenesis:Platform/GovernedIntelligence/memory-representation-strata.ttl
+  - SocioProphet/ontogenesis:catalog/governed_intelligence_registry.ttl
+
+extract_refs:
+  - SocioProphet/ontogenesis:docs/specs/governed-memory-representation-strata-v0.md#core-rule
+  - SocioProphet/ontogenesis:docs/specs/governed-memory-representation-strata-v0.md#strata
+
+claim_refs:
+  - il.claim.memory.no-silent-authority-ladder-climb
+  - il.claim.memory.vector-candidate-is-not-claim
+  - il.claim.memory.learning-event-is-not-automatic-memory-permission
+
+pattern_refs:
+  - il.pattern.institutional-amnesia
+
+countermeasure_refs:
+  - il.countermeasure.receipt-backed-promotion
+  - il.countermeasure.patternize-recovery
+
+authority_surface:
+  repo: SocioProphet/ontogenesis
+  artifact: docs/specs/governed-memory-representation-strata-v0.md
+  supporting_artifacts:
+    - Platform/GovernedIntelligence/memory-representation-strata.ttl
+    - contexts/governed-intelligence.context.jsonld
+    - examples/memory-representation-strata/
+    - shapes/memory_representation_strata.shacl.ttl
+    - scripts/validate_memory_representation_strata_examples.py
+  gate: make validate includes validate-memory-representation-strata
+
+gate_refs:
+  - SocioProphet/ontogenesis:scripts/validate_memory_representation_strata_examples.py
+  - SocioProphet/ontogenesis:Makefile
+
+teaching_refs:
+  - SocioProphet/systems-learning-loops:kb/patterns/institutional-amnesia.md#teaching-object
+
+reobservation_plan:
+  confirming_signal: >-
+    Workroom memory, topic packs, vector search, graph state, policy decisions,
+    and teaching objects cite strata boundaries before promotion.
+  weakening_signal: >-
+    Downstream systems collapse raw signal, vector candidates, claims, learned
+    memory, and receipts into one memory surface without promotion gates.
+  supersession_trigger: >-
+    A later Ontogenesis memory-strata schema or runtime adoption contract
+    supersedes this v0 doctrine.
+  review_cadence: >-
+    Review before Prophet Workspace, slash-topics, speechlab, or model-governance
+    runtime integrations create durable memory behavior.
+
+claim_boundary: >-
+  This receipt records representation-governance semantics. It does not define
+  runtime storage, database schemas, vector-index implementation, legal privacy
+  compliance, or product UI behavior.
