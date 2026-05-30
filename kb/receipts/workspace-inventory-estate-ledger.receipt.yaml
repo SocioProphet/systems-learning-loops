@@ -1,0 +1,66 @@
+receipt_id: il.receipt.workspace-inventory-estate-ledger
+status: provisional
+date: 2026-05-30
+lesson_summary: >-
+  Repository inventory is not only a list of repos. For cross-repo recovery and
+  governance, it must also record authority surfaces, recovery disposition,
+  adoption state, validation posture, and drift risk.
+
+source_refs:
+  - SocioProphet/sociosphere:docs/strategy/lost-work-recovery-map.md
+  - SocioProphet/workspace-inventory:docs/estate-ledger-v0.md
+  - SocioProphet/workspace-inventory:inventory/schema.json
+  - SocioProphet/workspace-inventory:inventory/repos.yaml
+  - SocioProphet/workspace-inventory:tools/validate_inventory.py
+
+extract_refs:
+  - SocioProphet/workspace-inventory:docs/estate-ledger-v0.md#lost-work-recovery-rule
+  - SocioProphet/workspace-inventory:docs/estate-ledger-v0.md#estate-ledger-objects
+
+claim_refs:
+  - il.claim.estate-ledger.inventory-needs-governance-state
+  - il.claim.estate-ledger.recovered-thread-needs-disposition
+  - il.claim.estate-ledger.validator-should-catch-enum-drift
+
+pattern_refs:
+  - il.pattern.institutional-amnesia
+
+countermeasure_refs:
+  - il.countermeasure.recovery-map
+  - il.countermeasure.do-not-lose-again
+  - il.countermeasure.receipt-backed-promotion
+
+authority_surface:
+  repo: SocioProphet/workspace-inventory
+  artifact: docs/estate-ledger-v0.md
+  supporting_artifacts:
+    - inventory/schema.json
+    - inventory/repos.yaml
+    - tools/validate_inventory.py
+  gate: tools/validate_inventory.py checks required fields, duplicate repo entries, and estate-ledger enum values
+
+gate_refs:
+  - SocioProphet/workspace-inventory:tools/validate_inventory.py
+
+teaching_refs:
+  - SocioProphet/systems-learning-loops:kb/patterns/institutional-amnesia.md#teaching-object
+
+reobservation_plan:
+  confirming_signal: >-
+    Sociosphere and workspace-inventory use estate-ledger annotations to answer
+    owner, authority, recovery, adoption, validation, and drift questions for
+    recovered workstreams.
+  weakening_signal: >-
+    New recovered threads touch repos without inventory annotations, authority
+    surfaces, drift notes, or validator coverage.
+  supersession_trigger: >-
+    A generated estate-ledger projection replaces manual annotations while
+    preserving schema, validator, and source-control review.
+  review_cadence: >-
+    Review after major recovery tranches and before Sociosphere consumes the
+    estate ledger for workspace/workroom materialization.
+
+claim_boundary: >-
+  This receipt records estate-governance state. It does not prove repo health,
+  CI correctness, production readiness, security posture, or mathematical
+  validity.
