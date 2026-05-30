@@ -1,0 +1,63 @@
+receipt_id: il.receipt.heller-godel-boundary-spectral-grammar
+status: provisional
+date: 2026-05-30
+lesson_summary: >-
+  Boundary, quotient, mode, spectral, recurrence, and revival language is useful
+  as Heller-Godel framework vocabulary, but must remain distance-controlled and
+  must not become theorem evidence, physics evidence, or proof transfer by analogy.
+
+source_refs:
+  - SocioProphet/sociosphere:docs/strategy/lost-work-recovery-map.md
+  - SocioProphet/Heller-Godel:docs/framework-core/boundary-spectral-grammar-v0.md
+  - SocioProphet/Heller-Godel:docs/framework-core/README.md
+
+extract_refs:
+  - SocioProphet/Heller-Godel:docs/framework-core/boundary-spectral-grammar-v0.md#core-grammar
+  - SocioProphet/Heller-Godel:docs/framework-core/boundary-spectral-grammar-v0.md#anti-seed-entries
+
+claim_refs:
+  - il.claim.boundary-spectral.grammar-not-theorem-evidence
+  - il.claim.boundary-spectral.spectral-resemblance-is-not-proof-transfer
+  - il.claim.boundary-spectral.revival-language-is-high-risk
+
+pattern_refs:
+  - il.pattern.institutional-amnesia
+
+countermeasure_refs:
+  - il.countermeasure.recovery-map
+  - il.countermeasure.receipt-backed-promotion
+
+authority_surface:
+  repo: SocioProphet/Heller-Godel
+  artifact: docs/framework-core/boundary-spectral-grammar-v0.md
+  supporting_artifacts:
+    - docs/framework-core/README.md
+  gate: cite only with claim level, distance tier, and anti-seed boundaries intact
+
+gate_refs:
+  - SocioProphet/Heller-Godel:docs/framework-core/boundary-spectral-grammar-v0.md#distance-controls
+  - SocioProphet/Heller-Godel:docs/framework-core/boundary-spectral-grammar-v0.md#anti-seed-entries
+
+teaching_refs:
+  - SocioProphet/systems-learning-loops:kb/patterns/institutional-amnesia.md#teaching-object
+
+reobservation_plan:
+  confirming_signal: >-
+    Clay-program repos cite boundary/spectral grammar only as vocabulary,
+    method-grade analogy, diagnostic, lemma-grade, or theorem-grade according
+    to explicit local evidence.
+  weakening_signal: >-
+    Repos use boundary, spectral, recurrence, revival, Wythoff, or Schwarz
+    language to imply theorem progress or physical interpretation without a
+    domain-specific proof or pinned diagnostic.
+  supersession_trigger: >-
+    A domain repo proves a stronger local result and promotes a specific subset
+    of the grammar under a reviewed claim grade.
+  review_cadence: >-
+    Review when Yang-Mills, Hodge, BSD, HPHd/Zeta, Heller-Dirac, or time-bridge
+    work cites the grammar.
+
+claim_boundary: >-
+  This receipt records vocabulary recovery only. It does not prove any spectral
+  theorem, mass gap, Hodge/BSD/RH/GRH/P-vs-NP claim, or physical time/causality
+  result.
