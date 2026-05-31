@@ -1,0 +1,79 @@
+receipt_id: il.receipt.prophet-platform-workroom-update-boundary
+status: provisional
+date: 2026-05-30
+lesson_summary: >-
+  Platform-side workroom update behavior must pass through a no-runtime contract
+  lane before any service, endpoint, persistence, policy gate, or mutation path
+  is implemented. A request can be accepted for review without executing or
+  mutating workroom state.
+
+source_refs:
+  - SocioProphet/prophet-platform:professional-intelligence.manifest.yaml
+  - SocioProphet/prophet-platform:docs/WORKROOM_UPDATE_RUNTIME_BOUNDARY.md
+  - SocioProphet/prophet-platform:contracts/workspace/workroom-update-request.example.json
+  - SocioProphet/prophet-platform:contracts/workspace/workroom-update-response.accepted.example.json
+  - SocioProphet/prophet-platform:tools/validate_workroom_update_contract.py
+  - SocioProphet/prophet-platform:tools/validate_professional_intelligence_manifest.py
+  - SocioProphet/prophet-platform:Makefile
+  - SocioProphet/prophet-platform:README.md
+
+extract_refs:
+  - SocioProphet/prophet-platform:docs/WORKROOM_UPDATE_RUNTIME_BOUNDARY.md#runtime-promotion-rule
+  - SocioProphet/prophet-platform:docs/WORKROOM_UPDATE_RUNTIME_BOUNDARY.md#implementation-readiness-checklist
+  - SocioProphet/prophet-platform:docs/WORKROOM_UPDATE_RUNTIME_BOUNDARY.md#failure-modes-to-prevent
+
+claim_refs:
+  - il.claim.platform.accepted-for-review-is-not-execution
+  - il.claim.platform.workroom-mutation-requires-policy-privacy-persistence-and-receipts
+  - il.claim.platform.runtime-boundary-precedes-service-implementation
+
+pattern_refs:
+  - il.pattern.institutional-amnesia
+
+countermeasure_refs:
+  - il.countermeasure.receipt-backed-promotion
+  - il.countermeasure.do-not-lose-again
+
+authority_surface:
+  repo: SocioProphet/prophet-platform
+  artifact: docs/WORKROOM_UPDATE_RUNTIME_BOUNDARY.md
+  supporting_artifacts:
+    - professional-intelligence.manifest.yaml
+    - contracts/workspace/workroom-update-request.example.json
+    - contracts/workspace/workroom-update-response.accepted.example.json
+    - tools/validate_workroom_update_contract.py
+    - tools/validate_professional_intelligence_manifest.py
+    - Makefile
+    - README.md
+  gate: make validate includes validate-workroom-update-contract and validate-professional-intelligence-manifest
+
+gate_refs:
+  - SocioProphet/prophet-platform:tools/validate_workroom_update_contract.py
+  - SocioProphet/prophet-platform:tools/validate_professional_intelligence_manifest.py
+  - SocioProphet/prophet-platform:Makefile
+
+teaching_refs:
+  - SocioProphet/systems-learning-loops:kb/patterns/institutional-amnesia.md#teaching-object
+
+reobservation_plan:
+  confirming_signal: >-
+    Future workroom runtime implementation begins by adding schemas, negative
+    fixtures, policy/privacy verification, persistence semantics, idempotency,
+    receipts, and require-review/rejection response classes before any live
+    mutation path.
+  weakening_signal: >-
+    Platform code adds an endpoint, service, database write, or agent-mediated
+    mutation path that treats accepted_for_review as execution or bypasses the
+    runtime-boundary checklist.
+  supersession_trigger: >-
+    A later platform service contract supersedes this boundary document by
+    defining request/response schemas, negative fixtures, persistence, policy,
+    privacy, receipt, replay, and runtime validation gates.
+  review_cadence: >-
+    Review before adding workroom update endpoints, service stubs, persistence,
+    AgentPlane handoffs, or TriTRPC control-plane messages.
+
+claim_boundary: >-
+  This receipt records pre-implementation runtime-boundary discipline. It does
+  not claim a live endpoint, production service, persistence model, policy
+  enforcement, mutation behavior, or demo readiness.
