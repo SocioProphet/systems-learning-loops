@@ -5,13 +5,15 @@ lesson_summary: >-
   Platform-side workroom update behavior must pass through a no-runtime contract
   lane before any service, endpoint, persistence, policy gate, or mutation path
   is implemented. A request can be accepted for review without executing or
-  mutating workroom state.
+  mutating workroom state. Negative fixture coverage now explicitly rejects any
+  accepted_for_review response that claims runtime mutation occurred.
 
 source_refs:
   - SocioProphet/prophet-platform:professional-intelligence.manifest.yaml
   - SocioProphet/prophet-platform:docs/WORKROOM_UPDATE_RUNTIME_BOUNDARY.md
   - SocioProphet/prophet-platform:contracts/workspace/workroom-update-request.example.json
   - SocioProphet/prophet-platform:contracts/workspace/workroom-update-response.accepted.example.json
+  - SocioProphet/prophet-platform:contracts/workspace/workroom-update-response.invalid-runtime-mutation.example.json
   - SocioProphet/prophet-platform:tools/validate_workroom_update_contract.py
   - SocioProphet/prophet-platform:tools/validate_professional_intelligence_manifest.py
   - SocioProphet/prophet-platform:Makefile
@@ -26,6 +28,7 @@ claim_refs:
   - il.claim.platform.accepted-for-review-is-not-execution
   - il.claim.platform.workroom-mutation-requires-policy-privacy-persistence-and-receipts
   - il.claim.platform.runtime-boundary-precedes-service-implementation
+  - il.claim.platform.negative-fixtures-must-reject-premature-mutation
 
 pattern_refs:
   - il.pattern.institutional-amnesia
@@ -33,6 +36,7 @@ pattern_refs:
 countermeasure_refs:
   - il.countermeasure.receipt-backed-promotion
   - il.countermeasure.do-not-lose-again
+  - il.countermeasure.negative-fixture-regression-guard
 
 authority_surface:
   repo: SocioProphet/prophet-platform
@@ -41,11 +45,15 @@ authority_surface:
     - professional-intelligence.manifest.yaml
     - contracts/workspace/workroom-update-request.example.json
     - contracts/workspace/workroom-update-response.accepted.example.json
+    - contracts/workspace/workroom-update-response.invalid-runtime-mutation.example.json
     - tools/validate_workroom_update_contract.py
     - tools/validate_professional_intelligence_manifest.py
     - Makefile
     - README.md
-  gate: make validate includes validate-workroom-update-contract and validate-professional-intelligence-manifest
+  gate: >-
+    make validate includes validate-workroom-update-contract and
+    validate-professional-intelligence-manifest; validate-workroom-update-contract
+    must accept the positive fixture and reject the invalid runtime-mutation fixture.
 
 gate_refs:
   - SocioProphet/prophet-platform:tools/validate_workroom_update_contract.py
@@ -63,8 +71,8 @@ reobservation_plan:
     mutation path.
   weakening_signal: >-
     Platform code adds an endpoint, service, database write, or agent-mediated
-    mutation path that treats accepted_for_review as execution or bypasses the
-    runtime-boundary checklist.
+    mutation path that treats accepted_for_review as execution, bypasses the
+    runtime-boundary checklist, or removes the invalid runtime-mutation fixture.
   supersession_trigger: >-
     A later platform service contract supersedes this boundary document by
     defining request/response schemas, negative fixtures, persistence, policy,
@@ -74,6 +82,7 @@ reobservation_plan:
     AgentPlane handoffs, or TriTRPC control-plane messages.
 
 claim_boundary: >-
-  This receipt records pre-implementation runtime-boundary discipline. It does
-  not claim a live endpoint, production service, persistence model, policy
-  enforcement, mutation behavior, or demo readiness.
+  This receipt records pre-implementation runtime-boundary discipline and
+  negative fixture coverage. It does not claim a live endpoint, production
+  service, persistence model, policy enforcement, mutation behavior, or demo
+  readiness.
