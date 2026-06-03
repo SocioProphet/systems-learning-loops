@@ -1,0 +1,98 @@
+receipt_id: il.receipt.ai-economist-policy-simulation-intake
+status: provisional
+date: 2026-06-03
+lesson_summary: >-
+  The AI Economist / Foundation corpus is useful as a modular economic-simulation
+  grammar, but it must be assimilated as source-backed design input rather than
+  as a runtime dependency or policy authority. Economic Prophet receives the
+  pattern through schema-first policy-simulation profiles, semantic gates,
+  triparty release quantities, and audit receipts.
+
+source_refs:
+  - SocioProphet/ai-economist:README.md
+  - SocioProphet/ai-economist:LICENSE.txt
+  - SocioProphet/ai-economist:ai_economist/foundation/base/base_env.py
+  - SocioProphet/ai-economist:ai_economist/foundation/base/registrar.py
+  - SocioProphet/ai-economist:ai_economist/foundation/components/redistribution.py
+  - SocioProphet/economic-prophet:docs/policy_simulation_source_intake.md
+  - SocioProphet/economic-prophet:schemas/policy_simulation_profile.schema.json
+  - SocioProphet/economic-prophet:examples/policy_simulation_profile.json
+  - SocioProphet/economic-prophet:src/open_ep_framework/policy_simulation.py
+  - SocioProphet/economic-prophet:tests/test_policy_simulation.py
+  - SocioProphet/sociosphere:registry/resource-intake-adoption.yaml
+
+extract_refs:
+  - SocioProphet/ai-economist:README.md#foundation-gym-style-api
+  - SocioProphet/ai-economist:LICENSE.txt#bsd-3-clause-conditions
+  - SocioProphet/ai-economist:ai_economist/foundation/base/base_env.py#base-environment-contract
+  - SocioProphet/ai-economist:ai_economist/foundation/base/registrar.py#component-scenario-agent-registries
+  - SocioProphet/economic-prophet:docs/policy_simulation_source_intake.md#intake-rule
+  - SocioProphet/economic-prophet:src/open_ep_framework/policy_simulation.py#semantic-gates
+  - SocioProphet/sociosphere:registry/resource-intake-adoption.yaml#adoptions
+
+claim_refs:
+  - il.claim.policy-simulation.donor-corpus-is-not-runtime-authority
+  - il.claim.policy-simulation.reward-score-is-advisory-only
+  - il.claim.policy-simulation.triparty-face-controls-release
+  - il.claim.policy-simulation.runtime-dependency-must-remain-false
+  - il.claim.policy-simulation.residuals-must-remain-explicit
+
+pattern_refs:
+  - il.pattern.source-corpus-to-capability-registry
+  - il.pattern.donor-runtime-containment
+  - il.pattern.triparty-release-before-policy-action
+  - il.pattern.receipt-backed-assimilation
+
+countermeasure_refs:
+  - il.countermeasure.schema-first-source-intake
+  - il.countermeasure.semantic-gates-before-runtime
+  - il.countermeasure.audit-artifact-before-promotion
+  - il.countermeasure.sociosphere-adoption-registry
+
+authority_surface:
+  repo: SocioProphet/economic-prophet
+  artifact: docs/policy_simulation_source_intake.md
+  supporting_artifacts:
+    - schemas/policy_simulation_profile.schema.json
+    - examples/policy_simulation_profile.json
+    - src/open_ep_framework/policy_simulation.py
+    - tests/test_policy_simulation.py
+    - .github/workflows/ci.yml
+  gate: >-
+    Policy simulation profile validation rejects donor runtime dependency,
+    non-advisory reward authority, triparty ordering violations, and residual
+    mismatches; CI runs the policy-simulation CLI smoke and uploads the audit
+    artifact.
+
+gate_refs:
+  - SocioProphet/economic-prophet:tests/test_policy_simulation.py
+  - SocioProphet/economic-prophet:.github/workflows/ci.yml
+  - SocioProphet/sociosphere:registry/resource-intake-adoption.yaml
+
+teaching_refs:
+  - SocioProphet/systems-learning-loops:docs/institutional-learning-canon-v0.md#canonical-loop
+
+reobservation_plan:
+  confirming_signal: >-
+    Future policy-simulation work continues to use schema-first profiles,
+    explicit advisory objectives, triparty release quantities, audit receipts,
+    and Sociosphere adoption records before any runtime or platform promotion.
+  weakening_signal: >-
+    A future implementation imports the donor runtime directly, treats reward
+    scores as release authority, hides residuals, bypasses triparty admission,
+    or removes the runtime-dependency false gate.
+  supersession_trigger: >-
+    A later Economic Prophet or UVMC policy-simulation standard creates a more
+    complete measured-entity contract and migrates this receipt into a formal
+    schema-backed learning receipt lane.
+  review_cadence: >-
+    Review before any RL/training dependency, platform evidence-consumer
+    integration, UVMC measured-entity promotion, or live policy automation is
+    introduced.
+
+claim_boundary: >-
+  This receipt records source-backed assimilation discipline. It does not claim
+  that AI Economist models are correct, fair, lawful, production-ready, or
+  normative policy authorities. It does not authorize live policy automation,
+  external settlement, token issuance, public-chain settlement, or release of
+  economic value without separate governance and legal review.
