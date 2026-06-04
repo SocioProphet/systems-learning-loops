@@ -1,0 +1,25 @@
+receipt_id: il.receipt.invalid-missing-claim-boundary
+status: provisional
+date: 2026-06-03
+lesson_summary: Invalid fixture missing claim boundary.
+source_refs:
+  - SocioProphet/example:README.md
+claim_refs:
+  - il.claim.example
+pattern_refs:
+  - il.pattern.example
+countermeasure_refs:
+  - il.countermeasure.example
+authority_surface:
+  repo: SocioProphet/example
+  artifact: README.md
+  gate: example gate
+gate_refs:
+  - SocioProphet/example:tools/validate.py
+teaching_refs:
+  - SocioProphet/example:docs/lesson.md
+reobservation_plan:
+  confirming_signal: confirm
+  weakening_signal: weaken
+  supersession_trigger: supersede
+  review_cadence: review
