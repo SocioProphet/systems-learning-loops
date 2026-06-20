@@ -5,8 +5,16 @@ precomputed **vector brain** plus structured training materials (lectures, probl
 solutions, exams) — the substrate an agent studies, attempts, and is graded on in the
 learning loop.
 
-> **Pull the vectors:** `git lfs pull` after cloning. The brain is under
-> `corpus/vectors/<subject>/<course>.jsonl` (base64-float32, 768-d nomic-embed).
+> **The data lives in the team's GCS bucket, not git** (keeps the repo free + fast).
+> `gs://sourceos-artifacts-socioprophet/ocw-corpus/` holds `state.tar` (corpus + vectors)
+> and `code.tar.gz` (Noetica + hellgraph source). Pull + resume on any machine:
+> ```bash
+> git clone https://github.com/SocioProphet/systems-learning-loops.git
+> bash systems-learning-loops/corpus/pull-state.sh   # corpus + vectors + code from GCS
+> bash ~/dev/Noetica/agent-machine/scripts/setup-new-mac.sh   # deps + ollama models + build
+> cd ~/dev/Noetica/agent-machine && bash scripts/ocw-grind.sh # resume the grind
+> ```
+> Vector format below; each course shard is `<subject>/<course>.jsonl` (base64-float32, 768-d nomic-embed).
 
 ## What's here
 
