@@ -59,6 +59,33 @@ git add .
 git commit -m "Initialize research pack: internet legends"
 ```
 
+## Experience records (self-improving loop, EG-1)
+
+Where a **learning receipt** preserves the qualitative learning-control chain, an
+**experience record** pins the *quantitative* claim of the self-improving loop (the
+experience generator: generate → measure → keep-if-better). The contract lives in
+`schemas/experience-record.schema.json`; the teeth live in
+`scripts/validate_experience_records.py` (run via `make validate-experience-records`).
+
+An improvement claim is not admitted unless it survives all four teeth:
+
+1. **Measured delta** — `improvement` must carry `baseline.value`, `candidate.value`,
+   and `delta`, with `delta == candidate.value - baseline.value`. A claim without a
+   measured delta is rejected.
+2. **Improving direction** — the delta must actually improve the metric
+   (`higher_better ⇒ delta > 0`, `lower_better ⇒ delta < 0`).
+3. **min-n ≥ 30** — effective `n = min(baseline.n, candidate.n)`. Below 30 the record
+   may not claim `active`; it must stay `provisional` (estate min-n rule, cf.
+   `guild-knowledge-network` `min_n_for_calibrated`). Small samples are flagged, not
+   promoted.
+4. **Receipt spine** — provenance is a recomputed SHA-256 receipt (FIPS 180-4):
+   `input_hash = sha256(improvement)` and `receipt_hash = sha256(record − receipt_hash)`.
+   Tampering with the measured delta breaks the hash and is rejected (mirrors
+   `prophet-workspace tools/proof-artifact-spine`).
+
+`kb/experience/*.experience.json` holds accepted records; `tests/fixtures/` holds the
+rejected counter-examples wired into `make validate-experience-records-negative`.
+
 ## Status
 
 This repo is scaffolded. The next commit wave is to fill `kb/sources/sources.yaml` with the complete enumerated list, generate `kb/sources/sources.jsonld`, start extracting quotes for P0 sources, and add the first institutional-learning topic taxonomy under `kb/topics/`.

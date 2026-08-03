@@ -1,0 +1,40 @@
+{
+  "record_id": "il.experience.noetica-loop.chemistry-compute.round-3",
+  "status": "active",
+  "date": "2026-08-03",
+  "loop": {
+    "loop_id": "noetica-self-improving-board",
+    "round": 3,
+    "generator": "boost-targets -> author -> tighten (dimensional gate) -> audit (run-manifest)"
+  },
+  "task": "chemistry x compute worked-example accuracy (held-out)",
+  "improvement": {
+    "metric": "accuracy_pct",
+    "direction": "higher_better",
+    "baseline": {
+      "value": 61.0,
+      "n": 40
+    },
+    "candidate": {
+      "value": 72.5,
+      "n": 42
+    },
+    "delta": 11.5,
+    "relative_delta": 0.1885
+  },
+  "evidence_refs": [
+    "noetica:agent-machine/canon/loop-rounds.jsonl#round-3",
+    "noetica:agent-machine/scripts/run-manifest.py"
+  ],
+  "evidence_grade": "measured",
+  "claim_boundary": "Improvement measured on held-out worked examples for the chemistry x compute cell only, under clean-eval discipline (authored knowledge keyed to the failure TYPE, not test-item answers). Does not generalize to other subject x op-type cells; supersede when the board re-runs at a larger n.",
+  "reobservation": {
+    "confirming_signal": "delta holds on the next board re-run at n>=100",
+    "supersession_trigger": "candidate accuracy regresses below baseline on any held-out re-run"
+  },
+  "receipt": {
+    "algorithm": "sha256",
+    "input_hash": "sha256:af2b0e549fff20b686aa1d568e163bfb645fcb4fff9abf14859436072b7ed0c5",
+    "receipt_hash": "sha256:bf0a72d28e4e260f435ca9d03171dd0fe63422212b6daa70eb9805c7962c18ab"
+  }
+}

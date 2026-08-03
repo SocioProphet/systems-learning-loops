@@ -1,0 +1,25 @@
+{
+  "record_id": "il.experience.noetica-loop.hop-arm.round-2-vibes",
+  "status": "active",
+  "date": "2026-08-03",
+  "loop": {
+    "loop_id": "noetica-self-improving-board",
+    "round": 2,
+    "generator": "hop arm (HippoRAG concepts -> KG -> PPR)"
+  },
+  "task": "multi-hop retrieval accuracy",
+  "improvement": {
+    "metric": "accuracy_pct",
+    "direction": "higher_better",
+    "baseline": {"value": 55.0, "n": 60},
+    "candidate": {"value": 61.0, "n": 60}
+  },
+  "evidence_refs": ["noetica:agent-machine/canon/loop-rounds.jsonl#round-2"],
+  "evidence_grade": "measured",
+  "claim_boundary": "This record claims an improvement but omits the measured delta, so the validator must reject it: a claim without evidence of the delta is not admitted.",
+  "receipt": {
+    "algorithm": "sha256",
+    "input_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "receipt_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+  }
+}
